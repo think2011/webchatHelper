@@ -3,7 +3,9 @@ webchatHelper
 
 一个微信群发信息的chrome扩展
 
-version 1.2
+version 1.5
+
+![](http://github.com/think2011/webchatHelper/raw/master/img/demo.gif);
 
 ![](http://github.com/think2011/webchatHelper/raw/master/img/1.png);
 
