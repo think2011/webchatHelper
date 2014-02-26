@@ -5,7 +5,7 @@
     "icons": {"128": "icon.png"},
 	"description": "就是给 好友 或者 公众号 或者 组 批量发信息呗 【作者：曾浩，邮箱：452125301@qq.com】",
 	 "content_scripts": [{
-	     "matches": ["http://wx2.qq.com/*","https://wx2.qq.com/*"],
+	     "matches": ["http://*.qq.com/*","https://*.qq.com/*"],
 	     "js": ["init.js"],
 	     "run_at": "document_end",
 	     "all_frames": true 
