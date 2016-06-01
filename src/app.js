@@ -12,10 +12,4 @@ class Ctrl {
     }
 }
 
-tools.init().then(() => {
-    angular.module("Controllers").controller('_wechatHelper', Ctrl)
-
-    angular.inject(($controller) => {
-        throw new Error($controller)
-    })
-})
+tools.init().then(new Ctrl)
