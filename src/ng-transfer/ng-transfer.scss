@@ -1,0 +1,72 @@
+$color-primary: #D9D9D9;
+
+.transfer-container {
+  margin: 200px;
+  display: flex;
+}
+
+.transfer {
+  width: 180px;
+  border: 1px solid $color-primary;
+  border-radius: 5px;
+  color: #666;
+  display: inline-block;
+  vertical-align: top;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  &-head {
+    padding: 5px 8px;
+    border-bottom: 1px solid $color-primary;
+
+    .type {
+      float: right;
+    }
+  }
+
+  &-body {
+  }
+
+  &-search {
+    text-align: center;
+    margin: 5px 0;
+
+    input {
+      width: 85%;
+      border-radius: 5px;
+      border: 1px solid $color-primary;
+      padding: 5px 8px;
+    }
+  }
+
+  &-list {
+    max-height: 350px;
+    overflow-y: auto;
+
+    li label {
+      margin: 0;
+      padding: 8px 10px;
+      display: block;
+      cursor: pointer;
+      transition: .3s;
+
+      &:hover {
+        background: #EAF8FE;
+      }
+    }
+  }
+}
+
+.transfer-operation {
+  vertical-align: top;
+  display: inline-block;
+  margin: 0 8px;
+  align-self: center;
+
+  button {
+    margin-bottom: 5px;
+    display: block;
+  }
+}

@@ -1,0 +1,57 @@
+<div class="transfer-container">
+    <div class="transfer from">
+        <div class="transfer-head">
+            <label>
+                <input type="checkbox">
+                {{ctrl.from.items.length}} 条
+            </label>
+
+            <span class="type">源列表</span>
+        </div>
+
+        <div class="transfer-body">
+            <div class="transfer-search">
+                <input ng-model="ctrl.from.search" type="search" placeholder="请输入搜索内容">
+            </div>
+            <ul class="transfer-list">
+                <li ng-repeat="item in ctrl.from.items | filter:ctrl.from.search track by $index">
+                    <label><input ng-model="item.checked" type="checkbox"> {{item.name}}</label>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="transfer-operation">
+        <button ng-disabled="!ctrl.hasSomeChecked(ctrl.to.items)"
+                ng-click="ctrl.transfer(ctrl.to.items, ctrl.from.items)">
+            <
+        </button>
+        <button ng-disabled="!ctrl.hasSomeChecked(ctrl.from.items)"
+                ng-click="ctrl.transfer(ctrl.from.items, ctrl.to.items)">
+            >
+        </button>
+    </div>
+
+    <div class="transfer to">
+        <div class="transfer-head">
+            <label>
+                <input type="checkbox">
+                {{ctrl.to.items.length}} 条
+            </label>
+
+            <span class="type">目的列表</span>
+        </div>
+
+        <div class="transfer-body">
+            <div class="transfer-search">
+                <input ng-model="ctrl.to.search" type="search" placeholder="请输入搜索内容">
+            </div>
+            <ul class="transfer-list">
+                <li ng-repeat="item in ctrl.to.items | filter:ctrl.to.search track by $index">
+                    <label><input ng-model="item.checked" type="checkbox"> {{item.name}}</label>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>

@@ -1,17 +1,9 @@
-'use strict'
-
-class App {
+export default new class {
     constructor() {
-        this._waitForInit().then(() => {
-            this.init()
-        })
     }
 
     init() {
-        angular.element('body').append('<button id="test">test</button>')
-
-        angular.element('#test').on('click', () => {
-        })
+        return this._waitForInit().then(() => angular)
     }
 
     /**
@@ -62,6 +54,11 @@ class App {
         return angular.element(selector).scope()
     }
 
+    /**
+     * 等微信初始化
+     * @returns {Promise}
+     * @private
+     */
     _waitForInit() {
         let interval = null
 
@@ -78,6 +75,5 @@ class App {
             }, 300)
         })
     }
-}
 
-new App()
+}
