@@ -30,11 +30,107 @@ export default new class {
     }
 
     /**
+     * 显示发送框
+     * @param $compile
+     * @param $rootScope
+     * @param items
+     */
+    showEditor($compile, $rootScope, items) {
+        let listHtml = `
+        <div id="mmpop_chatroom_members" class="wechatHelper-tag mmpop members_wrp slide-down" tabindex="-1" style="">
+    <div class=" members">
+        <div class="scroll-wrapper scrollbar-dynamic members_inner ng-scope" style="position: relative;">
+            <div class="scrollbar-dynamic members_inner ng-scope scroll-content"
+                 style="margin-bottom: 0px; margin-right: 0px;">
+                <div class="member" ng-repeat="item in weChatHelper.sendItems">
+                    <img class="avatar"
+                         ng-src="{{item.HeadImgUrl}}"
+                         alt="">
+                    <p class="nickname"
+                       ng-bind-html="trustAsHtml(item.RemarkName || item.NickName)">
+                    </p>
+                </div>
+
+            </div>
+            <div class="scroll-element scroll-x">
+                <div class="scroll-element_corner"></div>
+                <div class="scroll-arrow scroll-arrow_less"></div>
+                <div class="scroll-arrow scroll-arrow_more"></div>
+                <div class="scroll-element_outer">
+                    <div class="scroll-element_size"></div>
+                    <div class="scroll-element_inner-wrapper">
+                        <div class="scroll-element_inner scroll-element_track">
+                            <div class="scroll-element_inner-bottom"></div>
+                        </div>
+                    </div>
+                    <div class="scroll-bar" style="width: 96px;">
+                        <div class="scroll-bar_body">
+                            <div class="scroll-bar_body-inner"></div>
+                        </div>
+                        <div class="scroll-bar_bottom"></div>
+                        <div class="scroll-bar_center"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-element scroll-y">
+                <div class="scroll-element_corner"></div>
+                <div class="scroll-arrow scroll-arrow_less"></div>
+                <div class="scroll-arrow scroll-arrow_more"></div>
+                <div class="scroll-element_outer">
+                    <div class="scroll-element_size"></div>
+                    <div class="scroll-element_inner-wrapper">
+                        <div class="scroll-element_inner scroll-element_track">
+                            <div class="scroll-element_inner-bottom"></div>
+                        </div>
+                    </div>
+                    <div class="scroll-bar" style="height: 96px;">
+                        <div class="scroll-bar_body">
+                            <div class="scroll-bar_body-inner"></div>
+                        </div>
+                        <div class="scroll-bar_bottom"></div>
+                        <div class="scroll-bar_center"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        `
+
+        let sendHtml = `
+        <a class="btn btn_send wechatHelper-tag" href="javascript:;" ng-click="weChatHelper.send(weChatHelper.sendItems)">开始群发</a>
+        `
+
+        this.showChat('filehelper').then(() => {
+            $('.title_name').text('群发信息')
+
+            let weChatHelper = $rootScope.weChatHelper
+
+            weChatHelper.sendItems = items
+
+            angular.element('#chatRoomMembersWrap').append($compile(listHtml)($rootScope))
+
+            angular.element('[ng-click="sendTextMessage()"]').hide()
+            angular.element('.action').append($compile(sendHtml)($rootScope))
+
+            let interval = setInterval(() => {
+                if ($('.title_name').text() !== '群发信息') {
+                    clearInterval(interval)
+                    $('.wechatHelper-tag').remove()
+                    angular.element('[ng-click="sendTextMessage()"]').show()
+                }
+            }, 1000)
+
+            $rootScope.$apply()
+        })
+    }
+
+    /**
      * 显示聊天框
      * @param userName
      */
     showChat(userName) {
-        let $scope = this.getScope('html')
+        let $scope = this.getScope(document)
 
         $scope.$state.go('chat', {userName: userName})
 

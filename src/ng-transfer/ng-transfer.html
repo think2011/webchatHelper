@@ -1,12 +1,11 @@
 <div class="dialog_hd">
-    <h3 class="title">添加群发好友</h3>
+    <h3 class="title">选择群发好友</h3>
 </div>
 <div class="dialog_bd">
     <div class="transfer-container">
         <div class="transfer from">
             <div class="transfer-head">
                 <label>
-                    <input type="checkbox">
                     {{ctrl.from.items.length}} 条
                 </label>
 
@@ -45,7 +44,6 @@
         <div class="transfer to">
             <div class="transfer-head">
                 <label>
-                    <input type="checkbox">
                     {{ctrl.to.items.length}} 条
                 </label>
 
@@ -75,3 +73,5 @@
         <button ng-click="closeThisDialog(ctrl.to.items)" class="btn">去群发</button>
     </div>
 </div>
+
+

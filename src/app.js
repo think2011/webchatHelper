@@ -8,16 +8,26 @@ tools.init().then(() => {
     let $injector = angular.element(document).injector()
 
     $injector.invoke(function ($rootScope, $sce, $timeout, ngDialog, $compile) {
+        let weChatHelper = $rootScope.weChatHelper = {}
+
+        weChatHelper.send = function (items) {
+            tools.send(items)
+        }
+
         $rootScope.trustAsHtml = function (str) {
             return $sce.trustAsHtml(str);
         };
 
         $rootScope.massSms = function () {
-            ngDialog.open({
+            let dialog = ngDialog.open({
                 className : "default transfer",
                 controller: NgTransfer,
                 template  : require('./ng-transfer/ng-transfer.html'),
                 plain     : true
+            })
+
+            dialog.closePromise.then(function (data) {
+                tools.showEditor($compile, $rootScope, data.value)
             });
         }
 
