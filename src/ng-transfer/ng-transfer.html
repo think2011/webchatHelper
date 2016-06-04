@@ -72,6 +72,6 @@
     </div>
 
     <div ng-show="ctrl.to.items.length" class="text-center">
-        <button class="btn">去群发</button>
+        <button ng-click="closeThisDialog(ctrl.to.items)" class="btn">去群发</button>
     </div>
 </div>

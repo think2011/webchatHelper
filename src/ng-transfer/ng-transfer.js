@@ -11,8 +11,6 @@ class Ctrl {
         this.to   = {
             items: []
         }
-
-        this.modelItems = this.to.items
     }
 
     transfer(fromItems, toItems) {
