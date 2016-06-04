@@ -1,12 +1,16 @@
 $color-primary: #D9D9D9;
 
+.ngdialog.default.transfer .ngdialog-content {
+  width: 720px;
+}
+
 .transfer-container {
-  margin: 200px;
   display: flex;
+  margin-bottom: 20px;
 }
 
 .transfer {
-  width: 180px;
+  width: 100%;
   border: 1px solid $color-primary;
   border-radius: 5px;
   color: #666;
@@ -26,6 +30,15 @@ $color-primary: #D9D9D9;
     }
   }
 
+  &-list {
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 2px;
+      vertical-align: middle;
+    }
+  }
+
   &-body {
   }
 
@@ -42,7 +55,7 @@ $color-primary: #D9D9D9;
   }
 
   &-list {
-    max-height: 350px;
+    max-height: 450px;
     overflow-y: auto;
 
     li label {
@@ -51,11 +64,34 @@ $color-primary: #D9D9D9;
       display: block;
       cursor: pointer;
       transition: .3s;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
 
       &:hover {
-        background: #EAF8FE;
+        background: #eee;
+      }
+
+      input {
+        display: none;
       }
     }
+  }
+
+  .btn {
+    display: inline-block;
+    width: 200px;
+    text-align: center;
+    color: #fff;
+    line-height: 40px;
+    background-color: #42AC3E;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: none;
+    margin: 0 0 10px 0;
   }
 }
 
@@ -68,5 +104,20 @@ $color-primary: #D9D9D9;
   button {
     margin-bottom: 5px;
     display: block;
+    background: #42AC3E;
+    border: none;
+    color: #fff;
+    border-radius: 3px;
+    padding: 5px 8px;
+    cursor: pointer;
+
+    &[disabled] {
+      cursor: not-allowed;
+      background: #C9C9C9;
+    }
   }
+}
+
+.text-center {
+  text-align: center;
 }

@@ -11,7 +11,7 @@ export default new class {
      * @returns {Array.<T>|*}
      */
     fetchAllContacts() {
-        return this.getScope('[nav-contact-directive]').allContacts.filter((item) => item.type !== 'header')
+        return this.getScope('[contact-list-directive]').allContacts.filter((item) => item.type !== 'header')
     }
 
     /**
@@ -65,7 +65,7 @@ export default new class {
         return new Promise((resolve, reject) => {
             interval = setInterval(() => {
                 try {
-                    if (typeof angular && angular.element('[ui-sref="contact"]').length) {
+                    if (typeof angular && angular.element('[contact-list-directive]').length) {
                         resolve(angular)
                         clearInterval(interval)
                     }

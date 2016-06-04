@@ -1,9 +1,12 @@
-var moduleName = 'transfer'
+import tools from '../tools'
+import './ng-transfer.scss'
 
 class Ctrl {
-    constructor() {
+    constructor($scope) {
+        $scope.ctrl = this
+
         this.from = {
-            items: angular.copy(this.cfgItems)
+            items: angular.copy(tools.fetchAllContacts())
         }
         this.to   = {
             items: []
@@ -27,19 +30,4 @@ class Ctrl {
     }
 }
 
-angular.module(moduleName, [])
-    .directive('transfer', () => {
-        return {
-            bindToController: {
-                cfgItems  : '=',
-                modelItems: '='
-            },
-            scope           : {},
-            restrict        : 'AE',
-            controller      : Ctrl,
-            controllerAs    : 'ctrl',
-            templateUrl     : './ng-transfer.html'
-        }
-    })
-
-export default moduleName
+export default Ctrl
