@@ -130,3 +130,35 @@ $color-primary: #D9D9D9;
   border-radius: 4px;
   font-size: 15px;
 }
+
+.groups {
+  width: 60%;
+  margin: 10px auto;
+
+  li {
+    cursor: pointer;
+    padding: 5px 8px;
+    border-radius: 3px;
+
+    &:hover {
+      background: #eee;
+    }
+
+    .del {
+      float: right;
+      display: none;
+    }
+
+    &:hover {
+      .del {
+        display: inline-block;
+      }
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: #288525;
+  }
+
+}

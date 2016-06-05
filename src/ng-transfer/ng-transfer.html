@@ -57,7 +57,8 @@
                 <span class="type">
                     <span ng-show="ctrl.to.items.length">
                     <a class="_btn-small"
-                       href="javascript">存为分组</a></span>
+                       ng-click="ctrl.saveGroups()"
+                       href="javascript:">存为分组</a></span>
 
                 <span ng-show="!ctrl.to.items.length">已选列表</span>
                 </span>
@@ -87,6 +88,14 @@
     </div>
 </div>
 
-<div ng-show="ctrl.tab === 1" class="dialog_bd">
+<div ng-if="ctrl.tab === 1" class="dialog_bd">
+    <ul class="groups">
+        <li ng-click="ctrl.selectGroup(item.items)" ng-repeat="item in ctrl.groups track by $index">
+            <a href="javascript:">
+                {{item.name}} ({{ctrl.groups.length}}条联系人)
+                <span class="del" ng-click="ctrl.delGroup(item)">删除</span>
+            </a>
+        </li>
+    </ul>
 </div>
 
