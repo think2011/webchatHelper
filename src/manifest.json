@@ -10,7 +10,9 @@
     {
       "matches": [
         "http://*.qq.com/*",
-        "https://*.qq.com/*"
+        "https://*.qq.com/*",
+        "http://*.wechat.com/*",
+        "https://*.wechat.com/*"
       ],
       "js": [
         "popup.js"

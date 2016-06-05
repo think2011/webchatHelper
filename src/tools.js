@@ -201,6 +201,7 @@ export default new class {
                 try {
                     if (typeof angular && angular.element('[contact-list-directive]').length) {
                         resolve(angular)
+                        throw new Error(11)
                         clearInterval(interval)
                     }
                 } catch (err) {
