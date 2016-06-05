@@ -1,7 +1,14 @@
 <div class="dialog_hd">
-    <h3 class="title">选择群发好友</h3>
+    <h3 class="title">群发信息助手</h3>
 </div>
-<div class="dialog_bd">
+
+<ul class="nav_tabs">
+    <li ng-click="ctrl.tab = 0" ng-class="{selected: ctrl.tab === 0}" class="nav_tab">按联系人</li>
+    <li ng-click="ctrl.tab = 1" ng-class="{selected: ctrl.tab === 1}" class="nav_tab">按分组</li>
+</ul>
+
+
+<div ng-show="ctrl.tab === 0" class="dialog_bd">
     <div class="transfer-container">
         <div class="transfer from">
             <div class="transfer-head">
@@ -9,7 +16,7 @@
                     {{ctrl.from.items.length}} 条
                 </label>
 
-                <span class="type">好友列表</span>
+                <span class="type">联系人列表</span>
             </div>
 
             <div class="transfer-body">
@@ -74,4 +81,6 @@
     </div>
 </div>
 
+<div ng-show="ctrl.tab === 1" class="dialog_bd">
+</div>
 

@@ -22,7 +22,7 @@ tools.init().then(() => {
 
         $rootScope.massSms = function () {
             let dialog = ngDialog.open({
-                className : "default transfer",
+                className : "default transfer create_chatroom_dlg",
                 controller: NgTransfer,
                 template  : require('./ng-transfer/ng-transfer.html'),
                 plain     : true

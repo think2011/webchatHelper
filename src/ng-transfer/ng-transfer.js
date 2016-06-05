@@ -11,6 +11,8 @@ class Ctrl {
         this.to   = {
             items: []
         }
+
+        this.tab = 0
     }
 
     transfer(fromItems, toItems) {
