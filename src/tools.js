@@ -20,6 +20,8 @@ export default new class {
      * @param msg
      */
     sendMsg(userName, msg) {
+        let time = Math.floor(Math.random() * (1200 - 300)) + 300
+
         return new Promise((resolve, reject) => {
             this.showChat(userName).then(() => {
                 let $scope = this.getScope('[ng-controller="chatSenderController"]')
@@ -33,7 +35,7 @@ export default new class {
             setTimeout(() => {
 
                 resolve()
-            }, 300)
+            }, time)
         })
     }
 
