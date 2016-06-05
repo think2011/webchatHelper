@@ -7,7 +7,7 @@ class Ctrl {
 
         this.initList()
         this.groups = this.fetchGroups()
-        this.tab    = 1
+        this.tab    = 0
     }
 
     initList() {
