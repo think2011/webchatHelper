@@ -11,7 +11,7 @@ export default new class {
      * @returns {Array.<T>|*}
      */
     fetchAllContacts() {
-        return this.getScope('[contact-list-directive]').allContacts.filter((item) => item.type !== 'header')
+        return this.getScope('[contact-list-directive]').allContacts.filter((item) => item.type !== 'header' && item.UserName !== 'filehelper')
     }
 
     /**
@@ -20,13 +20,47 @@ export default new class {
      * @param msg
      */
     sendMsg(userName, msg) {
-        this.showChat(userName).then(() => {
-            let $scope = this.getScope('[ng-controller="chatSenderController"]')
+        return new Promise((resolve, reject) => {
+            this.showChat(userName).then(() => {
+                let $scope = this.getScope('[ng-controller="chatSenderController"]')
 
-            $scope.editAreaCtn = msg
-            $scope.$apply()
-            $scope.sendTextMessage()
+                $scope.editAreaCtn = msg
+                $scope.sendTextMessage()
+                $scope.editAreaCtn = ''
+                $scope.$apply()
+            })
+
+            setTimeout(() => {
+
+                resolve()
+            }, 300)
         })
+    }
+
+    /**
+     * 批量发送信息
+     * @param items
+     * @param msg
+     */
+    send(items, msg) {
+        if (!msg) return
+
+        let item = items.shift()
+
+        this.sendMsg(item.UserName, msg).then(() => {
+            if (items.length) {
+                this.send(items, msg)
+            } else {
+                this.sendMsg('filehelper', msg)
+            }
+        })
+    }
+
+    /**
+     * 获得输入的信息
+     */
+    getMsg() {
+        return this.getScope('#editArea').editAreaCtn
     }
 
     /**
@@ -42,7 +76,7 @@ export default new class {
         <div class="scroll-wrapper scrollbar-dynamic members_inner ng-scope" style="position: relative;">
             <div class="scrollbar-dynamic members_inner ng-scope scroll-content"
                  style="margin-bottom: 0px; margin-right: 0px;">
-                <div class="member" ng-repeat="item in weChatHelper.sendItems">
+                <div class="member" ng-repeat="item in weChatHelper.sendItems track by $index">
                     <img class="avatar"
                          ng-src="{{item.HeadImgUrl}}"
                          alt="">
@@ -108,9 +142,10 @@ export default new class {
 
             weChatHelper.sendItems = items
 
-            angular.element('#chatRoomMembersWrap').append($compile(listHtml)($rootScope))
+            angular.element('.box_hd').append($compile(listHtml)($rootScope))
 
             angular.element('[ng-click="sendTextMessage()"]').hide()
+            angular.element('[mm-repeat="message in chatContent"]').hide()
             angular.element('.action').append($compile(sendHtml)($rootScope))
 
             let interval = setInterval(() => {
@@ -118,6 +153,7 @@ export default new class {
                     clearInterval(interval)
                     $('.wechatHelper-tag').remove()
                     angular.element('[ng-click="sendTextMessage()"]').show()
+                    angular.element('[mm-repeat="message in chatContent"]').show()
                 }
             }, 1000)
 

@@ -11,7 +11,9 @@ tools.init().then(() => {
         let weChatHelper = $rootScope.weChatHelper = {}
 
         weChatHelper.send = function (items) {
-            tools.send(items)
+            if (!items.length.length && !confirm(`确定群发给${items.length}个好友吗?`)) return
+
+            tools.send(items, tools.getMsg())
         }
 
         $rootScope.trustAsHtml = function (str) {
@@ -27,6 +29,8 @@ tools.init().then(() => {
             })
 
             dialog.closePromise.then(function (data) {
+                if (!angular.isArray(data.value)) return
+
                 tools.showEditor($compile, $rootScope, data.value)
             });
         }
