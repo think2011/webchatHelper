@@ -54,7 +54,13 @@
                     {{ctrl.to.items.length}} 条
                 </label>
 
-                <span class="type">发送列表</span>
+                <span class="type">
+                    <span ng-show="ctrl.to.items.length">
+                    <a class="_btn-small"
+                       href="javascript">存为分组</a></span>
+
+                <span ng-show="!ctrl.to.items.length">已选列表</span>
+                </span>
             </div>
 
             <div class="transfer-body">

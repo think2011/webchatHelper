@@ -13,6 +13,8 @@ class Ctrl {
         }
 
         this.tab = 0
+
+        this.groups = []
     }
 
     transfer(fromItems, toItems) {
