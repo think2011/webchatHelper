@@ -4,7 +4,8 @@
   "description": "webchatHelper =============",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack -w -d --profile",
+    "dev": "rm -rf ./dist && webpack -w -d --profile",
+    "build": "rm -rf ./dist && webpack -p --progress --devtool ''",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
