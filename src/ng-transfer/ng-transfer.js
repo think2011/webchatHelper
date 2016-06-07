@@ -8,7 +8,7 @@ class Ctrl {
 
         this.initList()
         this.account = tools.getAccount()
-        this.Alias   = this.account.Alias
+        this.AttrStatus   = this.account.AttrStatus
         this.groups  = this.fetchGroups()
         this.tab     = this.groups.length ? 1 : 0
     }
@@ -81,11 +81,11 @@ class Ctrl {
 
 
     fetchGroups() {
-        return JSON.parse(localStorage[`groups_${this.Alias}`] || '[]')
+        return JSON.parse(localStorage[`groups_${this.AttrStatus}`] || '[]')
     }
 
     writeGroups() {
-        return localStorage[`groups_${this.Alias}`] = JSON.stringify(this.groups)
+        return localStorage[`groups_${this.AttrStatus}`] = JSON.stringify(this.groups)
     }
 }
 
