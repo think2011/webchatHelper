@@ -242,9 +242,8 @@ export default new class {
         return new Promise((resolve, reject) => {
             interval = setInterval(() => {
                 try {
-                    if (typeof angular && angular.element('[contact-list-directive]').length) {
+                    if (typeof angular && this.getAccount().Alias) {
                         resolve(angular)
-                        throw new Error(11)
                         clearInterval(interval)
                     }
                 } catch (err) {

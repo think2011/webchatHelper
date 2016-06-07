@@ -53,7 +53,7 @@ class Ctrl {
         this.groups.unshift({
             name,
             id   : Date.now(),
-            items: this.to.items.map((item) => item.Alias)
+            items: this.to.items.map((item) => item.AttrStatus)
         })
 
         this.writeGroups()
@@ -63,7 +63,7 @@ class Ctrl {
         this.initList()
 
         this.from.items.forEach((item) => {
-            item.checked = group.includes(item.Alias)
+            item.checked = group.includes(item.AttrStatus)
         })
 
         this.transfer(this.from.items, this.to.items)
