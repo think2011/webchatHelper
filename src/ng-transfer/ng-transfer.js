@@ -50,26 +50,29 @@ class Ctrl {
 
         if (!name) return
 
-        this.groups.unshift({
-            name,
-            id   : Date.now(),
-            items: this.to.items.map((item) => {
-                return {
-                    NickName  : item.NickName,
-                    RemarkName: item.RemarkName
-                }
-            })
+        if (this.groups[name]) {
+            if (!confirm(`已有【${name}】分组，要覆盖掉吗？`)) return
+        }
+
+        this.groups[name] = this.to.items.map((item) => {
+            return {
+                NickName  : item.NickName,
+                RemarkName: item.RemarkName
+            }
         })
 
         this.writeGroups()
     }
 
-    selectGroup(group) {
+    selectGroup(groupItems) {
         this.initList()
-
         this.from.items.forEach((item) => {
-            item.checked = group.some((groupItem) => {
-                return item.RemarkName ? item.RemarkName === groupItem.RemarkName || item.NickName === groupItem.NickName
+            item.checked = groupItems.some((groupItem) => {
+                if (item.RemarkName) {
+                    return item.RemarkName === groupItem.RemarkName
+                } else {
+                    return item.NickName === groupItem.NickName
+                }
             })
         })
 
@@ -77,18 +80,18 @@ class Ctrl {
         this.tab = 0
     }
 
-    delGroup(group) {
+    delGroup(id) {
         window.event.stopPropagation()
         window.event.preventDefault()
 
-        this.groups = this.groups.filter((item) => item.id !== group.id)
+        delete this.groups[id]
 
         this.writeGroups()
     }
 
 
     fetchGroups() {
-        return JSON.parse(localStorage[`groups_${this.NickName}`] || '[]')
+        return JSON.parse(localStorage[`groups_${this.NickName}`] || '{}')
     }
 
     writeGroups() {

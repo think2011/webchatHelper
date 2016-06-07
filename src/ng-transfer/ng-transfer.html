@@ -92,10 +92,10 @@
 
 <div ng-if="ctrl.tab === 1" class="dialog_bd">
     <ul class="groups">
-        <li ng-click="ctrl.selectGroup(item.items)" ng-repeat="item in ctrl.groups track by $index">
+        <li ng-click="ctrl.selectGroup(items)" ng-repeat="(key, items) in ctrl.groups track by $index">
             <a href="javascript:">
-                {{item.name}} ({{item.items.length}}条联系人)
-                <span class="del" ng-click="ctrl.delGroup(item)">删除</span>
+                {{key}} ({{items.length}}条联系人)
+                <span class="del" ng-click="ctrl.delGroup(key,items)">删除</span>
             </a>
         </li>
     </ul>

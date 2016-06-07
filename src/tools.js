@@ -247,7 +247,7 @@ export default new class {
 
                         setTimeout(() => {
                             resolve(angular)
-                        }, 1000)
+                        }, 1500)
                     }
                 } catch (err) {
                     //
