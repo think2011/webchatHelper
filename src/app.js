@@ -1,7 +1,6 @@
 'use strict'
 
 // TODO ZH 16/6/6 联系人多卡顿
-// TODO ZH 16/6/6 发送状态显示和估计
 
 import tools from './tools'
 import NgTransfer from './ng-transfer/ng-transfer'

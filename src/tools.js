@@ -48,8 +48,10 @@ export default new class {
 
         let item = items.shift()
 
-        document.title = `${items.length}人, 约${parseInt((items.length * 500 / 1000))}秒, 正发给[${item.RemarkName || item.NickName}]`
-
+        if (items.length >= 10) {
+            document.title = `${items.length}人, 约${parseInt((items.length * 500 / 1000))}秒, 正发给[${item.RemarkName || item.NickName}]`
+        }
+        
         this.sendMsg(item.UserName, msg).then(() => {
             if (items.length) {
                 this.send(items, msg)
