@@ -7,10 +7,10 @@ class Ctrl {
         $scope.ctrl = this
 
         this.initList()
-        this.account = tools.getAccount()
-        this.AttrStatus   = this.account.AttrStatus
-        this.groups  = this.fetchGroups()
-        this.tab     = this.groups.length ? 1 : 0
+        this.account  = tools.getAccount()
+        this.NickName = this.account.NickName
+        this.groups   = this.fetchGroups()
+        this.tab      = this.groups.length ? 1 : 0
     }
 
     initList() {
@@ -53,7 +53,7 @@ class Ctrl {
         this.groups.unshift({
             name,
             id   : Date.now(),
-            items: this.to.items.map((item) => item.AttrStatus)
+            items: this.to.items.map((item) => item.NickName)
         })
 
         this.writeGroups()
@@ -63,7 +63,7 @@ class Ctrl {
         this.initList()
 
         this.from.items.forEach((item) => {
-            item.checked = group.includes(item.AttrStatus)
+            item.checked = group.includes(item.NickName)
         })
 
         this.transfer(this.from.items, this.to.items)
@@ -81,11 +81,11 @@ class Ctrl {
 
 
     fetchGroups() {
-        return JSON.parse(localStorage[`groups_${this.AttrStatus}`] || '[]')
+        return JSON.parse(localStorage[`groups_${this.NickName}`] || '[]')
     }
 
     writeGroups() {
-        return localStorage[`groups_${this.AttrStatus}`] = JSON.stringify(this.groups)
+        return localStorage[`groups_${this.NickName}`] = JSON.stringify(this.groups)
     }
 }
 

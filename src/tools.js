@@ -242,7 +242,7 @@ export default new class {
         return new Promise((resolve, reject) => {
             interval = setInterval(() => {
                 try {
-                    if (typeof angular && this.getAccount().AttrStatus) {
+                    if (typeof angular && this.getAccount().NickName) {
                         resolve(angular)
                         clearInterval(interval)
                     }
