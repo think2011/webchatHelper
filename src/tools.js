@@ -50,13 +50,14 @@ export default new class {
 
         if (items.length >= 10) {
             document.title = `${items.length}人, 约${parseInt((items.length * 500 / 1000))}秒, 正发给[${item.RemarkName || item.NickName}]`
+        } else {
+            document.title = '微信'
         }
-        
+
         this.sendMsg(item.UserName, msg).then(() => {
             if (items.length) {
                 this.send(items, msg)
             } else {
-                document.title = '微信'
                 this.sendMsg('filehelper', msg)
             }
         })

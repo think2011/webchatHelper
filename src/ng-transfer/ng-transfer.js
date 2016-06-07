@@ -56,8 +56,6 @@ class Ctrl {
         })
 
         this.writeGroups()
-
-        alert('保存完毕')
     }
 
     selectGroup(group) {
