@@ -20,7 +20,7 @@ export default new class {
      * @param msg
      */
     sendMsg(userName, msg) {
-        let time = Math.floor(Math.random() * (1200 - 300)) + 300
+        let time = Math.floor(Math.random() * (1000 - 300)) + 300
 
         return new Promise((resolve, reject) => {
             this.showChat(userName).then(() => {
@@ -33,7 +33,6 @@ export default new class {
             })
 
             setTimeout(() => {
-
                 resolve()
             }, time)
         })
@@ -49,10 +48,13 @@ export default new class {
 
         let item = items.shift()
 
+        document.title = `${items.length}人, 约${parseInt((items.length * 500 / 1000))}秒, 正发给[${item.RemarkName || item.NickName}]`
+
         this.sendMsg(item.UserName, msg).then(() => {
             if (items.length) {
                 this.send(items, msg)
             } else {
+                document.title = '微信'
                 this.sendMsg('filehelper', msg)
             }
         })
