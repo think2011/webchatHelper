@@ -9,44 +9,46 @@ import NgTransfer from './ng-transfer/ng-transfer'
 tools.init().then(() => {
     let $injector = angular.element(document).injector()
 
-    $injector.invoke(function ($rootScope, $sce, $timeout, ngDialog, $compile) {
-        let weChatHelper = $rootScope.weChatHelper = {}
+    $injector.invoke([
+        '$rootScope', '$sce', '$timeout', 'ngDialog', '$compile',
+        function ($rootScope, $sce, $timeout, ngDialog, $compile) {
+            let weChatHelper = $rootScope.weChatHelper = {}
 
-        weChatHelper.send = function (items) {
-            if (!items.length.length && !confirm(`确定群发给${items.length}个好友吗?`)) return
+            weChatHelper.send = function (items) {
+                if (!items.length.length && !confirm(`确定群发给${items.length}个好友吗?`)) return
 
-            tools.send(items, tools.getMsg())
-        }
+                tools.send(items, tools.getMsg())
+            }
 
-        $rootScope.trustAsHtml = function (str) {
-            return $sce.trustAsHtml(str);
-        };
+            $rootScope.trustAsHtml = function (str) {
+                return $sce.trustAsHtml(str);
+            };
 
-        $rootScope.massSms = function () {
-            let dialog = ngDialog.open({
-                className : "default transfer create_chatroom_dlg",
-                controller: NgTransfer,
-                template  : require('./ng-transfer/ng-transfer.html'),
-                plain     : true
+            $rootScope.massSms = function () {
+                let dialog = ngDialog.open({
+                    className : "default transfer create_chatroom_dlg",
+                    controller: NgTransfer,
+                    template  : require('./ng-transfer/ng-transfer.html'),
+                    plain     : true
+                })
+
+                dialog.closePromise.then(function (data) {
+                    if (!angular.isArray(data.value)) return
+
+                    tools.showEditor($compile, $rootScope, data.value)
+                });
+            }
+
+            // 回车触发发送
+            angular.element(document).on('keydown', '[mm-action-track]', (e) => {
+                if (e.keyCode === 13 && $('a.wechatHelper-tag').length) {
+                    e.stopPropagation()
+                    e.preventDefault()
+                    $('a.wechatHelper-tag').click()
+                }
             })
 
-            dialog.closePromise.then(function (data) {
-                if (!angular.isArray(data.value)) return
-
-                tools.showEditor($compile, $rootScope, data.value)
-            });
-        }
-
-        // 回车触发发送
-        angular.element(document).on('keydown', '[mm-action-track]', (e) => {
-            if (e.keyCode === 13 && $('a.wechatHelper-tag').length) {
-                e.stopPropagation()
-                e.preventDefault()
-                $('a.wechatHelper-tag').click()
-            }
-        })
-
-        let html = `
+            let html = `
 <div ng-click="massSms()">
     <div class="contact_item">
         <div class="avatar">
@@ -59,8 +61,8 @@ tools.init().then(() => {
 </div>
         `
 
-        $('[contact-list-directive]').prepend($compile(html)($rootScope))
+            $('[contact-list-directive]').prepend($compile(html)($rootScope))
 
-        tools.fetchAllContacts()
-    });
+            tools.fetchAllContacts()
+        }]);
 })

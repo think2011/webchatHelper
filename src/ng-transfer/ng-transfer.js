@@ -34,7 +34,7 @@ class Ctrl {
     }
 
     hasSomeChecked(items) {
-        return items.some((item) => item.checked)
+        return items && items.some((item) => item.checked)
     }
 
     filterFunc(expected) {
@@ -89,5 +89,8 @@ class Ctrl {
         return localStorage[`groups_${this.userName}`] = JSON.stringify(this.groups)
     }
 }
+
+Ctrl.$inject = ['$scope']
+
 
 export default Ctrl
