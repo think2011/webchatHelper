@@ -11,11 +11,16 @@ export default new class {
      * @returns {Array.<T>|*}
      */
     fetchAllContacts() {
-        let documentScope = this.getScope('[contact-list-directive]')
+        let documentScope = this.getScope(document)
+        let items         = this.getScope('[contact-list-directive]').allContacts
 
-        if(documentScope.allContacts || this.getScope('[contact-list-directive]').allContacts)
+        if (documentScope._allContacts && documentScope._allContacts.length > items.length) {
+            return documentScope._allContacts
+        }
 
-        return this.getScope('[contact-list-directive]').allContacts.filter((item) => item.type !== 'header' && item.UserName !== 'filehelper')
+        documentScope._allContacts = items.filter((item) => item.type !== 'header' && item.UserName !== 'filehelper')
+
+        return documentScope._allContacts
     }
 
     /**
@@ -28,12 +33,14 @@ export default new class {
 
         return new Promise((resolve, reject) => {
             this.showChat(userName).then(() => {
-                let $scope = this.getScope('[ng-controller="chatSenderController"]')
+                let $scope        = this.getScope('[ng-controller="chatSenderController"]')
+                let documentScope = this.getScope(document)
 
-                $scope.editAreaCtn = msg
-                $scope.sendTextMessage()
-                $scope.editAreaCtn = ''
-                $scope.$apply()
+                documentScope.safeApply(() => {
+                    $scope.editAreaCtn = msg
+                    $scope.sendTextMessage()
+                    $scope.editAreaCtn = ''
+                })
             })
 
             setTimeout(() => {
@@ -146,29 +153,29 @@ export default new class {
         <a class="btn btn_send wechatHelper-tag" href="javascript:;" ng-click="weChatHelper.send(weChatHelper.sendItems)">开始群发</a>
         `
 
-        this.showChat('filehelper').then(() => {
-            $('.title_name').text('群发信息')
+        return this.showChat('filehelper').then(() => {
+            $rootScope.safeApply(() => {
+                $('.title_name').text('群发信息')
 
-            let weChatHelper = $rootScope.weChatHelper
+                let weChatHelper = $rootScope.weChatHelper
 
-            weChatHelper.sendItems = items
+                weChatHelper.sendItems = items
 
-            angular.element('.box_hd').append($compile(listHtml)($rootScope))
+                angular.element('.box_hd').append($compile(listHtml)($rootScope))
 
-            angular.element('[ng-click="sendTextMessage()"]').hide()
-            angular.element('[mm-repeat="message in chatContent"]').hide()
-            angular.element('.action').append($compile(sendHtml)($rootScope))
+                angular.element('[ng-click="sendTextMessage()"]').hide()
+                angular.element('[mm-repeat="message in chatContent"]').hide()
+                angular.element('.action').append($compile(sendHtml)($rootScope))
 
-            let interval = setInterval(() => {
-                if ($('.title_name').text() !== '群发信息') {
-                    clearInterval(interval)
-                    $('.wechatHelper-tag').remove()
-                    angular.element('[ng-click="sendTextMessage()"]').show()
-                    angular.element('[mm-repeat="message in chatContent"]').show()
-                }
-            }, 1000)
-
-            $rootScope.$apply()
+                let interval = setInterval(() => {
+                    if ($('.title_name').text() !== '群发信息') {
+                        clearInterval(interval)
+                        $('.wechatHelper-tag').remove()
+                        angular.element('[ng-click="sendTextMessage()"]').show()
+                        angular.element('[mm-repeat="message in chatContent"]').show()
+                    }
+                }, 1000)
+            })
         })
     }
 

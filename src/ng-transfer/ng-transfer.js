@@ -3,6 +3,7 @@ import './ng-transfer.scss'
 
 class Ctrl {
     constructor($scope) {
+        this.$scope = $scope
         $scope.ctrl = this
 
         this.initList()
@@ -13,14 +14,12 @@ class Ctrl {
     }
 
     initList() {
-        setTimeout(() => {
-            this.from = {
-                items: angular.copy(tools.fetchAllContacts())
-            }
-            this.to   = {
-                items: []
-            }
-        }, 200)
+        this.from = {
+            items: angular.copy(tools.fetchAllContacts())
+        }
+        this.to   = {
+            items: []
+        }
     }
 
     transfer(fromItems, toItems) {

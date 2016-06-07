@@ -15,7 +15,7 @@ tools.init().then(() => {
             let weChatHelper = $rootScope.weChatHelper = {}
 
             weChatHelper.send = function (items) {
-                if (!items.length.length && !confirm(`确定群发给${items.length}个好友吗?`)) return
+                if (!confirm(`确定群发给${items.length}个好友吗?`) || !items.length) return
 
                 tools.send(items, tools.getMsg())
             }
@@ -39,14 +39,16 @@ tools.init().then(() => {
                 });
             }
 
-            // 回车触发发送
-            angular.element(document).on('keydown', '[mm-action-track]', (e) => {
-                if (e.keyCode === 13 && $('a.wechatHelper-tag').length) {
-                    e.stopPropagation()
-                    e.preventDefault()
-                    $('a.wechatHelper-tag').click()
+            $rootScope.safeApply = function safeApply(operation) {
+                var phase = this.$root.$$phase;
+                if (phase !== '$apply' && phase !== '$digest') {
+                    this.$apply(operation);
+                    return;
                 }
-            })
+
+                if (operation && typeof operation === 'function')
+                    operation();
+            };
 
             let html = `
 <div ng-click="massSms()">
