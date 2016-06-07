@@ -49,6 +49,23 @@ export default new class {
         })
     }
 
+    disabledOldSend() {
+        let scope = this.getScope('#editArea')
+
+        scope.sendTextMessage = scope.editAreaBlur = scope.editAreaClick = scope.editAreaKeydown = scope.editAreaKeyup = () => {
+        }
+
+        $('#editArea').on('keydown', function () {
+            window.event.stopPropagation()
+        })
+    }
+
+    enabledOldSend() {
+        let $scope = this.getScope(document)
+
+        $scope.$state.go('contact')
+    }
+
     /**
      * 批量发送信息
      * @param items
@@ -191,7 +208,7 @@ export default new class {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve()
-            }, 300)
+            }, 150)
         })
     }
 

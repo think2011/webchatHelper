@@ -36,6 +36,9 @@ tools.init().then(() => {
                     if (!angular.isArray(data.value)) return
 
                     tools.showEditor($compile, $rootScope, data.value)
+                    $timeout(() => {
+                        tools.disabledOldSend()
+                    }, 500)
                 });
             }
 
