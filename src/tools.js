@@ -179,6 +179,16 @@ export default new class {
         })
     }
 
+
+    /**
+     * 获得用户信息
+     */
+    getAccount() {
+        let $scope = this.getScope('.main_inner .header')
+
+        return $scope.account
+    }
+
     /**
      * 获得scope
      * @param selector

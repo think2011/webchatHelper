@@ -6,8 +6,10 @@ class Ctrl {
         $scope.ctrl = this
 
         this.initList()
-        this.groups = this.fetchGroups()
-        this.tab    = 0
+        this.account  = tools.getAccount()
+        this.userName = this.account.UserName
+        this.groups   = this.fetchGroups()
+        this.tab      = this.groups.length ? 1 : 0
     }
 
     initList() {
@@ -40,7 +42,8 @@ class Ctrl {
 
         this.groups.unshift({
             name,
-            items: this.to.items
+            id   : Date.now(),
+            items: this.to.items.map((item) => item.UserName)
         })
 
         this.writeGroups()
@@ -52,7 +55,7 @@ class Ctrl {
         this.initList()
 
         this.from.items.forEach((item) => {
-            item.checked = group.some((groupItem) => groupItem.UserName === item.UserName)
+            item.checked = group.includes(item.UserName)
         })
 
         this.transfer(this.from.items, this.to.items)
@@ -63,20 +66,18 @@ class Ctrl {
         window.event.stopPropagation()
         window.event.preventDefault()
 
-        this.groups = this.groups.filter((item) => item.name !== group.name)
+        this.groups = this.groups.filter((item) => item.id !== group.id)
 
         this.writeGroups()
     }
 
 
     fetchGroups() {
-        return JSON.parse(localStorage.wechatHelperGroups || '[]')
+        return JSON.parse(localStorage[`groups_${this.userName}`] || '[]')
     }
 
     writeGroups() {
-        let groups = this.groups
-
-        return localStorage.wechatHelperGroups = JSON.stringify(groups)
+        return localStorage[`groups_${this.userName}`] = JSON.stringify(this.groups)
     }
 }
 
