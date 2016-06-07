@@ -68,7 +68,9 @@ class Ctrl {
         this.initList()
 
         this.from.items.forEach((item) => {
-            item.checked = group.some((groupItem) => item.RemarkName === groupItem.RemarkName || item.NickName === groupItem.NickName)
+            item.checked = group.some((groupItem) => {
+                return item.RemarkName ? item.RemarkName === groupItem.RemarkName || item.NickName === groupItem.NickName
+            })
         })
 
         this.transfer(this.from.items, this.to.items)
