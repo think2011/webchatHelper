@@ -37,6 +37,15 @@ tools.init().then(() => {
             });
         }
 
+        // 回车触发发送
+        angular.element(document).on('keydown', '[mm-action-track]', (e) => {
+            if (e.keyCode === 13 && $('a.wechatHelper-tag').length) {
+                e.stopPropagation()
+                e.preventDefault()
+                $('a.wechatHelper-tag').click()
+            }
+        })
+
         let html = `
 <div ng-click="massSms()">
     <div class="contact_item">
@@ -51,5 +60,7 @@ tools.init().then(() => {
         `
 
         $('[contact-list-directive]').prepend($compile(html)($rootScope))
+
+        tools.fetchAllContacts()
     });
 })

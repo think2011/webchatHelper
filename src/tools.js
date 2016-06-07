@@ -11,6 +11,10 @@ export default new class {
      * @returns {Array.<T>|*}
      */
     fetchAllContacts() {
+        let documentScope = this.getScope('[contact-list-directive]')
+
+        if(documentScope.allContacts || this.getScope('[contact-list-directive]').allContacts)
+
         return this.getScope('[contact-list-directive]').allContacts.filter((item) => item.type !== 'header' && item.UserName !== 'filehelper')
     }
 

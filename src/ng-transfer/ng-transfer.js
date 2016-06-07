@@ -13,12 +13,14 @@ class Ctrl {
     }
 
     initList() {
-        this.from = {
-            items: angular.copy(tools.fetchAllContacts())
-        }
-        this.to   = {
-            items: []
-        }
+        setTimeout(() => {
+            this.from = {
+                items: angular.copy(tools.fetchAllContacts())
+            }
+            this.to   = {
+                items: []
+            }
+        }, 200)
     }
 
     transfer(fromItems, toItems) {
