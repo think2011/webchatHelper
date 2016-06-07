@@ -243,8 +243,11 @@ export default new class {
             interval = setInterval(() => {
                 try {
                     if (typeof angular && this.getAccount().NickName) {
-                        resolve(angular)
                         clearInterval(interval)
+
+                        setTimeout(() => {
+                            resolve(angular)
+                        }, 1000)
                     }
                 } catch (err) {
                     //
