@@ -5,7 +5,7 @@
   "icons": {
     "128": "icon.png"
   },
-  "description": "就是给 好友 或者 公众号 或者 组 批量发信息",
+  "description": "群发信息给好友, 452125301.hzplay@gmail.com",
   "content_scripts": [
     {
       "matches": [

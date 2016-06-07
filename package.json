@@ -1,7 +1,7 @@
 {
   "name": "v2",
-  "version": "1.0.0",
-  "description": "webchatHelper =============",
+  "version": "2.1.0",
+  "description": "微信群发助手",
   "main": "index.js",
   "scripts": {
     "dev": "rm -rf ./dist && webpack -w -d --profile",
