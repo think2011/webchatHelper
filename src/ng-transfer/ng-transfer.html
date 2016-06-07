@@ -25,7 +25,7 @@
                 </div>
                 <ul class="transfer-list">
                     <li data-no-cache="true" data-height-calc="heightCalc" data-buffer-height="100"
-                        mm-repeat="item in ctrl.from.items | filter:ctrl.from.search track by $index">
+                        mm-repeat="item in ctrl.from.items | filter:ctrl.filterFunc(ctrl.from.search) track by $index">
                         <label>
                             <i ng-class="{'web_wechat_choose_wireframe':item.checked === false,'web_wechat_choose_green':item.checked === true}"
                             ></i>
@@ -70,7 +70,7 @@
                     <input ng-model="ctrl.to.search" type="search" placeholder="搜索:用户名、昵称、组名">
                 </div>
                 <ul class="transfer-list">
-                    <li ng-repeat="item in ctrl.to.items | filter:ctrl.to.search track by $index">
+                    <li ng-repeat="item in ctrl.to.items | filter:ctrl.filterFunc(ctrl.to.search) track by $index">
                         <label>
                             <i ng-class="{'web_wechat_choose_wireframe':item.checked === false,'web_wechat_choose_green':item.checked === true}"
                             ></i>

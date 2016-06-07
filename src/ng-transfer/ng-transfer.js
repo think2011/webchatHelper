@@ -35,6 +35,15 @@ class Ctrl {
         return items.some((item) => item.checked)
     }
 
+    filterFunc(expected) {
+        return (item) => {
+            if (!expected) return item
+
+            let reg = new RegExp(expected, 'ig')
+            return reg.test(item.RemarkName) || reg.test(item.NickName)
+        }
+    }
+
     saveGroups() {
         let name = prompt('给分组取个名字：')
 
