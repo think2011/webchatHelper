@@ -18,7 +18,13 @@ export default new class {
             return documentScope._allContacts
         }
 
-        documentScope._allContacts = items.filter((item) => item.type !== 'header' && item.UserName !== 'filehelper')
+        documentScope._allContacts = items.filter((item) => {
+            let isContact = item.type !== 'header' && item.UserName !== 'filehelper'
+
+            isContact && (item.checked = false)
+
+            return isContact
+        })
 
         return documentScope._allContacts
     }

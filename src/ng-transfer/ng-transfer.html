@@ -25,7 +25,6 @@
                 </div>
                 <ul class="transfer-list">
                     <li
-                            ng-init="item.checked = false"
                             ng-repeat="item in ctrl.from.items | filter:ctrl.filterFunc(ctrl.from.search) track by $index">
                         <label>
                             <i ng-class="{'web_wechat_choose_wireframe':item.checked === false,'web_wechat_choose_green':item.checked === true}"

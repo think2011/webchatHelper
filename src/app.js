@@ -69,5 +69,9 @@ tools.init().then(() => {
             $('[contact-list-directive]').prepend($compile(html)($rootScope))
 
             tools.fetchAllContacts()
+
+            setTimeout(() => {
+                $rootScope.massSms()
+            }, 1000)
         }]);
 })
