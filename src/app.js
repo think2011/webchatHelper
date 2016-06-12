@@ -12,7 +12,9 @@ tools.init().then(() => {
     $injector.invoke([
         '$rootScope', '$sce', '$timeout', 'ngDialog', '$compile',
         function ($rootScope, $sce, $timeout, ngDialog, $compile) {
-            let weChatHelper = $rootScope.weChatHelper = {}
+            let weChatHelper = $rootScope.weChatHelper = {
+                allContacts: []
+            }
 
             weChatHelper.send = function (items) {
                 if (!confirm(`确定群发给${items.length}个好友吗?`) || !items.length) return
@@ -33,6 +35,8 @@ tools.init().then(() => {
                 })
 
                 dialog.closePromise.then(function (data) {
+                    $rootScope.$emit('massSms:close')
+
                     if (!angular.isArray(data.value)) return
 
                     tools.showEditor($compile, $rootScope, data.value)
@@ -66,12 +70,8 @@ tools.init().then(() => {
 </div>
         `
 
+            tools.initAllContacts()
             $('[contact-list-directive]').prepend($compile(html)($rootScope))
-
-            tools.fetchAllContacts()
-
-            setTimeout(() => {
-                $rootScope.massSms()
-            }, 1000)
+            $rootScope.massSms()
         }]);
 })

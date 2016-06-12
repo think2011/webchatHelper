@@ -10,23 +10,44 @@ export default new class {
      * 获取联系人名单
      * @returns {Array.<T>|*}
      */
-    fetchAllContacts() {
+    initAllContacts() {
         let documentScope = this.getScope(document)
-        let items         = this.getScope('[contact-list-directive]').allContacts
+        let contactScope  = this.getScope('[contact-list-directive]')
+        let itemCache     = {}
 
-        if (documentScope._allContacts && documentScope._allContacts.length > items.length) {
-            return documentScope._allContacts
-        }
+        contactScope.$watch('allContacts', (newVal) => {
+            if (!angular.isArray(newVal)) return
 
-        documentScope._allContacts = items.filter((item) => {
-            let isContact = item.type !== 'header' && item.UserName !== 'filehelper'
-
-            isContact && (item.checked = false)
-
-            return isContact
+            newVal.forEach((item) => {
+                if (!itemCache[item.UserName] && item.type !== 'header' && item.UserName !== 'filehelper') {
+                    itemCache[item.UserName] = true
+                    item.checked             = false
+                    documentScope.weChatHelper.allContacts.push(item)
+                }
+            })
         })
 
-        return documentScope._allContacts
+        /*    documentScope.contactScope =
+
+         if (documentScope._allContacts && documentScope._allContacts.length > items.length) {
+         return documentScope._allContacts
+         }
+
+         documentScope._allContacts = items.filter((item) => {
+         let isContact = item.type !== 'header' && item.UserName !== 'filehelper'
+
+         isContact && (item.checked = false)
+
+         return isContact
+         })
+         /!*
+
+         for (var i = 0; i < 3000; i++) {
+         documentScope._allContacts.push(documentScope._allContacts[0])
+         }
+         *!/
+
+         return documentScope._allContacts*/
     }
 
     /**
@@ -250,10 +271,7 @@ export default new class {
                 try {
                     if (typeof angular && this.getAccount().NickName) {
                         clearInterval(interval)
-
-                        setTimeout(() => {
-                            resolve(angular)
-                        }, 1500)
+                        resolve(angular)
                     }
                 } catch (err) {
                     //

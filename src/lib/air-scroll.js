@@ -12,32 +12,20 @@ export default class {
      * @param options.$timeout
      */
     constructor(options) {
-        let {$timeout, selector, wrapItems, itemsField} = options
+        let {$timeout, $scope, selector, wrapItems, itemsField} = options
 
         this.options = options
 
-        $timeout(() => {
-            let $handle     = angular.element(selector)
-            let scrollEvent = $handle.data('airScroll')
+        let $handle = angular.element(selector)
 
-            $handle
-                .prepend('<div class="top-placeholder"></div>')
-                .append('<div class="bottom-placeholder"></div>')
+        $handle
+            .prepend('<div class="top-placeholder"></div>')
+            .append('<div class="bottom-placeholder"></div>')
 
-            this.$topPlaceholder    = $handle.find('.top-placeholder')
-            this.$bottomPlaceholder = $handle.find('.bottom-placeholder')
-            this.initItems()
+        this.$topPlaceholder    = $handle.find('.top-placeholder')
+        this.$bottomPlaceholder = $handle.find('.bottom-placeholder')
 
-            if (scrollEvent) return
-
-            let scrollFunc = () => {
-                this.updateItems()
-            }
-
-            $handle
-                .data('airScroll', scrollFunc)
-                .on('scroll', scrollFunc)
-        }, 1000)
+        $handle.on('scroll', this.updateItems.bind(this))
     }
 
     initItems() {
@@ -49,11 +37,9 @@ export default class {
     }
 
     setItems(start) {
-        start                   = Math.floor(start)
+        start           = Math.floor(start)
         let {wrapItems, itemsField, showLength, $rootScope, itemHeight} = this.options
-        let $handle             = angular.element(this.options.selector)
-        let currentScrollHeight = $handle.scrollTop()
-        let sourceItems         = this.sourceItems
+        let sourceItems = this.sourceItems
 
         let allHeight         = (sourceItems.length - showLength) * itemHeight
         let topHeight         = start * itemHeight
@@ -71,10 +57,7 @@ export default class {
     updateItems() {
         let {itemHeight, showLength, bufferLength} = this.options
         let $handle             = angular.element(this.options.selector)
-        let handleHeight        = $handle.height()
-        let bufferHeight        = this.options.itemHeight * this.options.bufferLength
         let currentScrollHeight = $handle.scrollTop()
-        let scrollHeight        = $handle[0].scrollHeight - handleHeight
 
         if (currentScrollHeight > bufferLength * itemHeight) {
             this.setItems(currentScrollHeight / itemHeight)

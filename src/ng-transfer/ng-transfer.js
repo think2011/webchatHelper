@@ -4,28 +4,48 @@ import AirScroll from '../lib/air-scroll'
 import './ng-transfer.scss'
 
 class Ctrl {
-    constructor($scope, $timeout, $rootScope) {
+    constructor($scope, $timeout, $rootScope, $q, $interval) {
+        this.$interval  = $interval
+        this.$q         = $q
         this.$timeout   = $timeout
         this.$rootScope = $rootScope
         this.$scope     = $scope
         $scope.ctrl     = this
 
-        this.initList()
-        this.account  = tools.getAccount()
-        this.NickName = this.account.NickName
-        this.groups   = this.fetchGroups()
-        this.tab      = this.groups.length ? 1 : 0
+        this.waitForInit().then(() => {
+            this.initList()
+            this.account  = tools.getAccount()
+            this.NickName = this.account.NickName
+            this.groups   = this.fetchGroups()
+            this.tab      = Object.keys(this.groups).length ? 1 : 0
+
+            $rootScope.$on('massSms:close', () => {
+                this.revertItems()
+            })
+            $rootScope.safeApply()
+        })
+    }
+
+    waitForInit() {
+        return new Promise((resolve, reject) => {
+            let interval = this.$interval(() => {
+                if (angular.element('.transfer-list').length) {
+                    this.$interval.cancel(interval)
+                    resolve()
+                }
+            }, 100)
+        })
     }
 
     initList() {
         this.from = {
-            items: angular.copy(tools.fetchAllContacts())
+            items: this.$rootScope.weChatHelper.allContacts
         }
         this.to   = {
             items: []
         }
 
-        new AirScroll({
+        let airScroll = new AirScroll({
             selector    : '.transfer-list:eq(0)',
             itemHeight  : 46,
             showLength  : 8,
@@ -36,6 +56,16 @@ class Ctrl {
             $rootScope  : this.$rootScope,
             $timeout    : this.$timeout
         })
+
+        airScroll.initItems()
+
+        window.xx = airScroll
+    }
+
+    revertItems() {
+        this.from.items.push(...this.to.items)
+        this.from.items.forEach((item) => item.checked = false)
+        this.to.items = []
     }
 
     transfer(fromItems, toItems) {
@@ -81,7 +111,7 @@ class Ctrl {
     }
 
     selectGroup(groupItems) {
-        this.initList()
+        this.revertItems()
         this.from.items.forEach((item) => {
             item.checked = groupItems.some((groupItem) => {
                 if (item.RemarkName) {
@@ -115,7 +145,7 @@ class Ctrl {
     }
 }
 
-Ctrl.$inject = ['$scope', '$timeout', '$rootScope']
+Ctrl.$inject = ['$scope', '$timeout', '$rootScope', '$q', '$interval']
 
 
 export default Ctrl
