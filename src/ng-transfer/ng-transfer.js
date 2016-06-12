@@ -38,28 +38,42 @@ class Ctrl {
     }
 
     initList() {
-        this.from = {
-            items: this.$rootScope.weChatHelper.allContacts
-        }
-        this.to   = {
-            items: []
-        }
-
-        let airScroll = new AirScroll({
+        let fromAirScrollConfig = {
             selector    : '.transfer-list:eq(0)',
             itemHeight  : 46,
             showLength  : 8,
-            bufferLength: 10,
-            wrapItems   : this.from,
-            itemsField  : 'items',
+            bufferLength: 6,
             $scope      : this.$scope,
             $rootScope  : this.$rootScope,
             $timeout    : this.$timeout
+        }
+        let toAirScrollConfig   = {
+            selector    : '.transfer-list:eq(1)',
+            itemHeight  : 46,
+            showLength  : 8,
+            bufferLength: 6,
+            $scope      : this.$scope,
+            $rootScope  : this.$rootScope,
+            $timeout    : this.$timeout
+        }
+
+        this.from = {
+            items    : this.$rootScope.weChatHelper.allContacts,
+            airScroll: new AirScroll(fromAirScrollConfig)
+        }
+        this.to   = {
+            items    : [],
+            airScroll: new AirScroll(toAirScrollConfig)
+        }
+
+        this.$scope.$watch(() => this.from.items.length, (newVal) => {
+            this.from.airScroll.initItems(this.from.items)
+            throw new Error(11)
         })
 
-        airScroll.initItems()
-
-        window.xx = airScroll
+        this.$scope.$watch(() => this.to.items.length, (newVal) => {
+            this.to.airScroll.initItems(this.to.items)
+        })
     }
 
     revertItems() {

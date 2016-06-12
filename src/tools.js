@@ -26,28 +26,6 @@ export default new class {
                 }
             })
         })
-
-        /*    documentScope.contactScope =
-
-         if (documentScope._allContacts && documentScope._allContacts.length > items.length) {
-         return documentScope._allContacts
-         }
-
-         documentScope._allContacts = items.filter((item) => {
-         let isContact = item.type !== 'header' && item.UserName !== 'filehelper'
-
-         isContact && (item.checked = false)
-
-         return isContact
-         })
-         /!*
-
-         for (var i = 0; i < 3000; i++) {
-         documentScope._allContacts.push(documentScope._allContacts[0])
-         }
-         *!/
-
-         return documentScope._allContacts*/
     }
 
     /**

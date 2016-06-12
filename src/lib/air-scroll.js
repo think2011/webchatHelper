@@ -6,13 +6,11 @@ export default class {
      * @param options.itemHeight
      * @param options.showLength
      * @param options.bufferLength
-     * @param options.wrapItems
-     * @param options.itemsField
      * @param options.$scope
      * @param options.$timeout
      */
     constructor(options) {
-        let {$timeout, $scope, selector, wrapItems, itemsField} = options
+        let {selector} = options
 
         this.options = options
 
@@ -28,17 +26,18 @@ export default class {
         $handle.on('scroll', this.updateItems.bind(this))
     }
 
-    initItems() {
-        let {wrapItems, itemsField, bufferLength, showLength} = this.options
+    initItems(sourceItems) {
+        let {bufferLength, showLength} = this.options
 
-        this.sourceItems     = wrapItems[itemsField]
+        this.items           = []
+        this.sourceItems     = sourceItems
         this.viewItemsLength = showLength + bufferLength
-        this.setItems(0)
+        this.updateItems()
     }
 
     setItems(start) {
         start           = Math.floor(start)
-        let {wrapItems, itemsField, showLength, $rootScope, itemHeight} = this.options
+        let {showLength, $rootScope, itemHeight} = this.options
         let sourceItems = this.sourceItems
 
         let allHeight         = (sourceItems.length - showLength) * itemHeight
@@ -50,13 +49,13 @@ export default class {
         this.$bottomPlaceholder.css({height: bottomHeight})
 
         $rootScope.safeApply(() => {
-            wrapItems[itemsField] = sourceItems.slice(start, start + this.viewItemsLength)
+            this.items = sourceItems.slice(start, start + this.viewItemsLength)
         })
     }
 
     updateItems() {
-        let {itemHeight, showLength, bufferLength} = this.options
-        let $handle             = angular.element(this.options.selector)
+        let {itemHeight, bufferLength, selector} = this.options
+        let $handle             = angular.element(selector)
         let currentScrollHeight = $handle.scrollTop()
 
         if (currentScrollHeight > bufferLength * itemHeight) {
