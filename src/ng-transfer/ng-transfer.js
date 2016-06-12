@@ -4,7 +4,8 @@ import AirScroll from '../lib/air-scroll'
 import './ng-transfer.scss'
 
 class Ctrl {
-    constructor($scope, $timeout, $rootScope, $q, $interval) {
+    constructor($scope, $timeout, $rootScope, $q, $interval, $filter) {
+        this.$filter    = $filter
         this.$interval  = $interval
         this.$q         = $q
         this.$timeout   = $timeout
@@ -70,9 +71,21 @@ class Ctrl {
             this.from.airScroll.initItems(this.from.items)
         })
 
+        this.$scope.$watch(() => this.from.search, (newVal) => {
+            this.from.items = this.filterFunc(this.$rootScope.weChatHelper.allContacts, newVal)
+        })
+
         this.$scope.$watch(() => this.to.items.length, (newVal) => {
             this.to.airScroll.initItems(this.to.items)
         })
+
+        this.$scope.$watch(() => this.to.search, (newVal) => {
+            let sourceItems = this.$rootScope.weChatHelper.allContacts.filter((item) => {
+                return this.to.items.some((toItems) => item.UserName === toItems.UserName)
+            })
+            this.to.items   = this.filterFunc(sourceItems, newVal)
+        })
+
     }
 
     revertItems() {
@@ -95,13 +108,13 @@ class Ctrl {
         return items && items.some((item) => item.checked)
     }
 
-    filterFunc(expected) {
-        return (item) => {
-            if (!expected) return item
+    filterFunc(items, expected) {
+        if (!expected) return items
 
+        return items.filter((item) => {
             let reg = new RegExp(expected, 'ig')
             return reg.test(item.RemarkName) || reg.test(item.NickName)
-        }
+        })
     }
 
     saveGroups() {
@@ -158,7 +171,7 @@ class Ctrl {
     }
 }
 
-Ctrl.$inject = ['$scope', '$timeout', '$rootScope', '$q', '$interval']
+Ctrl.$inject = ['$scope', '$timeout', '$rootScope', '$q', '$interval', '$filter']
 
 
 export default Ctrl

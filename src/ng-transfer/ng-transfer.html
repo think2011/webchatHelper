@@ -25,7 +25,7 @@
                 </div>
                 <ul class="transfer-list">
                     <li
-                            ng-repeat="item in ctrl.from.airScroll.items | filter:ctrl.filterFunc(ctrl.from.search) track by item.UserName">
+                            ng-repeat="item in ctrl.from.airScroll.items track by item.UserName">
                         <label>
                             <i ng-class="{'web_wechat_choose_wireframe':item.checked === false,'web_wechat_choose_green':item.checked === true}"
                             ></i>
@@ -70,7 +70,7 @@
                     <input ng-model="ctrl.to.search" type="search" placeholder="搜索:用户名、昵称、组名">
                 </div>
                 <ul class="transfer-list">
-                    <li ng-repeat="item in ctrl.to.airScroll.items | filter:ctrl.filterFunc(ctrl.to.search) track by item.UserName">
+                    <li ng-repeat="item in ctrl.to.airScroll.items  track by item.UserName">
                         <label>
                             <i ng-class="{'web_wechat_choose_wireframe':item.checked === false,'web_wechat_choose_green':item.checked === true}"
                             ></i>
