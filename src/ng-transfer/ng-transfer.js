@@ -68,7 +68,6 @@ class Ctrl {
 
         this.$scope.$watch(() => this.from.items.length, (newVal) => {
             this.from.airScroll.initItems(this.from.items)
-            throw new Error(11)
         })
 
         this.$scope.$watch(() => this.to.items.length, (newVal) => {
