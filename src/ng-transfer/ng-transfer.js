@@ -1,11 +1,14 @@
 import tools from '../tools'
+import AirScroll from '../lib/air-scroll'
+
 import './ng-transfer.scss'
 
 class Ctrl {
-    constructor($scope, $timeout) {
-        this.$timeout = $timeout
-        this.$scope   = $scope
-        $scope.ctrl   = this
+    constructor($scope, $timeout, $rootScope) {
+        this.$timeout   = $timeout
+        this.$rootScope = $rootScope
+        this.$scope     = $scope
+        $scope.ctrl     = this
 
         this.initList()
         this.account  = tools.getAccount()
@@ -22,16 +25,17 @@ class Ctrl {
             items: []
         }
 
-        // TODO ZH 16/6/11 
-        this.$timeout(() => {
-            this.from.sourceItems = this.from.items
-            this.from.items       = this.from.sourceItems.slice(0, 10)
-
-            angular.element('.transfer-list:eq(0)').on('scroll', () => {
-                this.from.items = this.from.sourceItems.slice(0, this.from.items.length + 1)
-                this.$scope.$apply()
-            })
-        },1000)
+        new AirScroll({
+            selector    : '.transfer-list:eq(0)',
+            itemHeight  : 46,
+            showLength  : 8,
+            bufferLength: 10,
+            wrapItems   : this.from,
+            itemsField  : 'items',
+            $scope      : this.$scope,
+            $rootScope  : this.$rootScope,
+            $timeout    : this.$timeout
+        })
     }
 
     transfer(fromItems, toItems) {
@@ -111,7 +115,7 @@ class Ctrl {
     }
 }
 
-Ctrl.$inject = ['$scope', '$timeout']
+Ctrl.$inject = ['$scope', '$timeout', '$rootScope']
 
 
 export default Ctrl
