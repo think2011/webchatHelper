@@ -71,21 +71,25 @@ class Ctrl {
             this.from.airScroll.initItems(this.from.items)
         })
 
-        this.$scope.$watch(() => this.from.search, (newVal) => {
-            this.from.items = this.filterFunc(this.$rootScope.weChatHelper.allContacts, newVal)
-        })
-
         this.$scope.$watch(() => this.to.items.length, (newVal) => {
             this.to.airScroll.initItems(this.to.items)
         })
 
-        this.$scope.$watch(() => this.to.search, (newVal) => {
-            let sourceItems = this.$rootScope.weChatHelper.allContacts.filter((item) => {
-                return this.to.items.some((toItems) => item.UserName === toItems.UserName)
-            })
-            this.to.items   = this.filterFunc(sourceItems, newVal)
+        this.$scope.$watch(() => this.from.search, (newVal, oldVal) => {
+            if (!oldVal) {
+                this.from.backupItems = this.from.items
+            }
+
+            this.from.items = this.filterFunc(this.from.backupItems, newVal)
         })
 
+        this.$scope.$watch(() => this.to.search, (newVal, oldVal) => {
+            if (!oldVal) {
+                this.to.backupItems = this.to.items
+            }
+
+            this.to.items = this.filterFunc(this.to.backupItems, newVal)
+        })
     }
 
     revertItems() {
@@ -113,7 +117,12 @@ class Ctrl {
 
         return items.filter((item) => {
             let reg = new RegExp(expected, 'ig')
-            return reg.test(item.RemarkName) || reg.test(item.NickName)
+            return reg.test(item.PYInitial)
+                || reg.test(item.RemarkPYInitial)
+                || reg.test(item.PYQuanPin)
+                || reg.test(item.RemarkPYQuanPin)
+                || reg.test(item.RemarkName)
+                || reg.test(item.NickName)
         })
     }
 

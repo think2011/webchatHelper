@@ -254,7 +254,7 @@ export default new class {
                 } catch (err) {
                     //
                 }
-            }, 1500)
+            }, 3000)
         })
     }
 
