@@ -92,6 +92,10 @@ export default new class {
                 this.send(items, msg)
             } else {
                 this.sendMsg('filehelper', msg)
+                    .then(() => {
+                        this.enabledOldSend()
+                    })
+
             }
         })
     }
