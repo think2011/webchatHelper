@@ -182,5 +182,4 @@ class Ctrl {
 
 Ctrl.$inject = ['$scope', '$timeout', '$rootScope', '$q', '$interval', '$filter']
 
-
 export default Ctrl
