@@ -91,11 +91,8 @@ export default new class {
             if (items.length) {
                 this.send(items, msg)
             } else {
+                this.enabledOldSend()
                 this.sendMsg('filehelper', msg)
-                    .then(() => {
-                        this.enabledOldSend()
-                    })
-
             }
         })
     }
@@ -115,10 +112,8 @@ export default new class {
      */
     showEditor($compile, $rootScope, items) {
         let listHtml = `
-        <div id="mmpop_chatroom_members" class="wechatHelper-tag mmpop members_wrp slide-down" tabindex="-1" style="">
-    <div class=" members">
-        <div class="scroll-wrapper scrollbar-dynamic members_inner ng-scope" style="position: relative;">
-            <div class="scrollbar-dynamic members_inner ng-scope scroll-content"
+        <div id="mmpop_chatroom_members" class="wechatHelper-tag mmpop members_wrp slide-down" tabindex="-1" style="background: #eee">
+   <div class="scrollbar-dynamic members_inner  scroll-content"
                  style="margin-bottom: 0px; margin-right: 0px;">
                 <div class="member" ng-repeat="item in weChatHelper.sendItems track by $index">
                     <img class="avatar"
@@ -130,48 +125,6 @@ export default new class {
                 </div>
 
             </div>
-            <div class="scroll-element scroll-x">
-                <div class="scroll-element_corner"></div>
-                <div class="scroll-arrow scroll-arrow_less"></div>
-                <div class="scroll-arrow scroll-arrow_more"></div>
-                <div class="scroll-element_outer">
-                    <div class="scroll-element_size"></div>
-                    <div class="scroll-element_inner-wrapper">
-                        <div class="scroll-element_inner scroll-element_track">
-                            <div class="scroll-element_inner-bottom"></div>
-                        </div>
-                    </div>
-                    <div class="scroll-bar" style="width: 96px;">
-                        <div class="scroll-bar_body">
-                            <div class="scroll-bar_body-inner"></div>
-                        </div>
-                        <div class="scroll-bar_bottom"></div>
-                        <div class="scroll-bar_center"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="scroll-element scroll-y">
-                <div class="scroll-element_corner"></div>
-                <div class="scroll-arrow scroll-arrow_less"></div>
-                <div class="scroll-arrow scroll-arrow_more"></div>
-                <div class="scroll-element_outer">
-                    <div class="scroll-element_size"></div>
-                    <div class="scroll-element_inner-wrapper">
-                        <div class="scroll-element_inner scroll-element_track">
-                            <div class="scroll-element_inner-bottom"></div>
-                        </div>
-                    </div>
-                    <div class="scroll-bar" style="height: 96px;">
-                        <div class="scroll-bar_body">
-                            <div class="scroll-bar_body-inner"></div>
-                        </div>
-                        <div class="scroll-bar_bottom"></div>
-                        <div class="scroll-bar_center"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
         `
 
@@ -187,14 +140,16 @@ export default new class {
 
                 weChatHelper.sendItems = items
 
-                angular.element('.box_hd').append($compile(listHtml)($rootScope))
+                setTimeout(() => {
+                    angular.element('.box_hd').append($compile(listHtml)($rootScope))
+                }, 300)
 
                 angular.element('[ng-click="sendTextMessage()"]').hide()
                 angular.element('[mm-repeat="message in chatContent"]').hide()
                 angular.element('.action').append($compile(sendHtml)($rootScope))
 
                 let interval = setInterval(() => {
-                    if ($('.title_name').text() !== '群发信息') {
+                    if (!$('.title_name').text().includes('群发信息')) {
                         clearInterval(interval)
                         $('.wechatHelper-tag').remove()
                         angular.element('[ng-click="sendTextMessage()"]').show()
