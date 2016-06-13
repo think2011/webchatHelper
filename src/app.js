@@ -1,7 +1,5 @@
 'use strict'
 
-// TODO ZH 16/6/6 联系人多卡顿
-
 import tools from './tools'
 import NgTransfer from './ng-transfer/ng-transfer'
 
@@ -72,6 +70,5 @@ tools.init().then(() => {
 
             tools.initAllContacts()
             $('[contact-list-directive]').prepend($compile(html)($rootScope))
-            $rootScope.massSms()
         }]);
 })
