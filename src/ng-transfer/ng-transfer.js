@@ -80,12 +80,26 @@ class Ctrl {
                 this.from.backupItems = this.from.items
             }
 
+            for (var i = 0; i < this.from.backupItems.length; i++) {
+                if (this.to.items.includes(this.from.backupItems[i])) {
+                    this.from.backupItems.splice(i, 1)
+                    i--
+                }
+            }
+
             this.from.items = this.filterFunc(this.from.backupItems, newVal)
         })
 
         this.$scope.$watch(() => this.to.search, (newVal, oldVal) => {
             if (!oldVal) {
                 this.to.backupItems = this.to.items
+            }
+
+            for (var i = 0; i < this.to.backupItems.length; i++) {
+                if (this.from.items.includes(this.to.backupItems[i])) {
+                    this.to.backupItems.splice(i, 1)
+                    i--
+                }
             }
 
             this.to.items = this.filterFunc(this.to.backupItems, newVal)
