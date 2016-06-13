@@ -177,7 +177,7 @@ export default new class {
 
         return this.showChat('filehelper').then(() => {
             $rootScope.safeApply(() => {
-                $('.title_name').text('群发信息')
+                $('.title_name').text(`群发信息(${items.length}个联系人)`)
 
                 let weChatHelper = $rootScope.weChatHelper
 
