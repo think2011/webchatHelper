@@ -3,7 +3,12 @@ import html from './send.html'
 class Ctrl {
     constructor(services) {
         this.services = services
-        this.active   = false
+        this.show     = true
+        this.step     = 2
+    }
+
+    toNext(index) {
+        this.step = index
     }
 }
 

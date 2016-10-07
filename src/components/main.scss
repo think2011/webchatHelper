@@ -5,7 +5,6 @@
   top: 0;
   right: 30px;
   z-index: 30000;
-  box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.59);
 
   * {
     box-sizing: border-box;
@@ -29,7 +28,7 @@
     }
 
     .h-panel {
-      transform: translate(0, -100%);
+      transform: translate(0, -110%);
     }
   }
 
@@ -45,7 +44,8 @@
     border-radius: 0 0 5px 5px;
     background: $color-primary;
     transition: transform .3s ease;
-    transform: translate(-50%, -100%);
+    transform: translate(-50%, -110%);
+    box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.59);
     position: absolute;
     left: 50%;
     white-space: nowrap;
@@ -56,9 +56,10 @@
     position: absolute;
     text-align: center;
     border: 1px solid #ccc;
-    transform: translate(0, -100%);
+    transform: translate(0, -110%);
     transition: transform .3s ease;
     border-radius: 0 0 5px 5px;
+    box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.59);
     background: #fff;
 
     h1 {
@@ -97,6 +98,8 @@
         }
 
         li {
+          padding: 0 10px;
+
           h2 {
             font-size: 14px;
           }

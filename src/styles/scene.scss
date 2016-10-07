@@ -1,0 +1,17 @@
+.h-scene {
+  transform: translate(0, 0);
+  transition: .3s ease;
+  display: flex;
+  flex-flow: row nowrap;
+
+  @for $i from 1 through 5 {
+    &.scene#{$i} {
+      transform: translate(#{-($i * 100%) + 100}, 0);
+    }
+  }
+
+  > * {
+    width: 100%;
+    flex: none;
+  }
+}

@@ -2,6 +2,7 @@ $color-primary: #02B300;
 $color-warning: #FF6600;
 
 @import "./steps";
+@import "./scene";
 @import "../components/main";
 @import "../components/send";
 
@@ -11,6 +12,10 @@ $color-warning: #FF6600;
 
 .text-center {
   text-align: center;
+}
+
+.text-right {
+  text-align: right;
 }
 
 .has-hr {
@@ -44,31 +49,6 @@ $color-warning: #FF6600;
   }
   &-warning {
     color: $color-warning;
-  }
-}
-
-.h-scene {
-  transform: translate(0, 0);
-  transition: .3s ease;
-  display: flex;
-  flex-flow: row nowrap;
-
-  &.scene1 {
-    transform: translate(0, 0);
-  }
-
-  &.scene2 {
-    transform: translate(-100%, 0);
-  }
-
-  &.scene3 {
-    transform: translate(-200%, 0);
-  }
-
-  > .item {
-    width: 100%;
-    flex: none;
-    padding: 0 10px;
   }
 }
 

@@ -10,6 +10,7 @@
     color: #ccc;
     padding-left: 20px;
     margin: 0 5px;
+    transition: .3s ease;
 
     > span {
       padding: 0 5px;
@@ -28,6 +29,7 @@
       left: 0;
       z-index: 2;
       background: #fff;
+      transition: .3s ease;
     }
 
     &:after {
@@ -40,6 +42,7 @@
       transform: translate(0, -50%);
       z-index: -1;
       background: #ccc;
+      transition: .3s ease;
     }
 
     @for $i from 1 through 5 {
@@ -58,19 +61,6 @@
       }
     }
 
-    &.done {
-      color: $color-primary;
-
-      &:before {
-        border-color: $color-primary;
-        content: '√';
-      }
-
-      &:after {
-        background: $color-primary;
-      }
-    }
-
     &.current {
       color: #555;
       font-weight: bold;
@@ -78,6 +68,22 @@
       &:before {
         border-color: $color-primary;
         color: #fff;
+        background: $color-primary;
+      }
+    }
+
+    &.done {
+      font-weight: normal;
+      color: $color-primary;
+
+      &:before {
+        background: #fff;
+        color: $color-primary;
+        border-color: $color-primary;
+        content: '√';
+      }
+
+      &:after {
         background: $color-primary;
       }
     }

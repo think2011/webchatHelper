@@ -1,16 +1,42 @@
-<div class="helper-send-container" ng-class="{true:'active',false:'inactive'}[ctrl.active]">
+<div class="helper-send-container step-{{ctrl.step}}" ng-class="{true:'show',false:'hide'}[ctrl.show]">
     <h1 class="head">
-        <button class="pull-right close h-btn h-btn-link">×</button>
+        <button ng-click="ctrl.show = false" class="pull-right close h-btn h-btn-link">×</button>
         群发信息
     </h1>
+
     <div class="body">
         <ul class="steps">
-            <li class="item current"><span>输入内容</span></li>
-            <li class="item "><span>选择联系人</span></li>
-            <li class="item"><span>确认发送</span></li>
+            <li class="item current" ng-class="{current:ctrl.step === 1, done:ctrl.step > 1}">
+                <span>输入内容</span>
+            </li>
+            <li class="item" ng-class="{current:ctrl.step === 2, done:ctrl.step > 2}">
+                <span>选择联系人</span>
+            </li>
+            <li class="item" ng-class="{current:ctrl.step === 3, done:ctrl.step > 3}">
+                <span>确认发送</span>
+            </li>
         </ul>
-    </div>
-    <div class="footer">
+
+
+        <ul class="h-scene scene{{ctrl.step}}">
+            <li>
+                <div class="editor">
+                    <pre contenteditable="true"></pre>
+                </div>
+
+                <div class="footer text-right">
+                    <button ng-click="ctrl.toNext(2)" class="h-btn">下一步</button>
+                </div>
+            </li>
+            <li>
+                123123
+
+                <div class="footer text-right">
+                    <button ng-click="ctrl.toNext(1)" class="h-btn h-btn-link">上一步</button>
+                    <button ng-click="ctrl.toNext(3)" class="h-btn">下一步</button>
+                </div>
+            </li>
+        </ul>
 
     </div>
 </div>
