@@ -4,10 +4,11 @@
   top: 50%;
   left: 50%;
   border-radius: 5px;
-  transform: translate(-50%, -70%);
+  transform: translate(-50%, -50%);
   overflow: hidden;
   z-index: 199111;
   background: #fff;
+  transition: .3s ease;
 
   &.hide {
     display: none;
@@ -30,6 +31,12 @@
 
   &.step-1 {
     width: 520px;
+    height: 362px;
+  }
+
+  &.step-2 {
+    width: 520px;
+    height: 762px;
   }
 
   .head {
@@ -46,6 +53,8 @@
   }
 
   .body {
+    transition: .3s ease;
+
     min-height: 200px;
     padding: 0;
 
