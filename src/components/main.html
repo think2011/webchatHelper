@@ -1,0 +1,50 @@
+<div class="helper-main-container" ng-class="{true:'active',false:'inactive'}[ctrl.active]">
+    <button class="handle" ng-click="ctrl.active = true">
+        ◈ 微信群发助手
+    </button>
+
+    <div class="h-panel">
+        <button ng-click="ctrl.active = false" class="close h-btn h-btn-link">×</button>
+
+        <h1>微信群发助手 <span class="text-muted">v3.0.0</span></h1>
+        <span class="text-muted">by David & think2011</span>
+
+        <div class="h-panel-body">
+            <ul class="scene1">
+                <li class="text-center">
+                    <button class="h-btn">
+                        群发信息
+                    </button>
+                </li>
+                <li>
+                    <h2 class="has-hr">
+                        <div class="pull-right">10/300</div>
+
+                        正在发送..
+                    </h2>
+                    <div class="user has-hr">
+                        <img class="img"
+                             src="/cgi-bin/mmwebwx-bin/webwxgeticon?seq=620171266&amp;username=filehelper&amp;skey=@crypt_cf81dc07_dcd777afa188e5245b4a88a64825d731"
+                             mm-src="/cgi-bin/mmwebwx-bin/webwxgeticon?seq=620171266&amp;username=filehelper&amp;skey=@crypt_cf81dc07_dcd777afa188e5245b4a88a64825d731"
+                             alt="">
+                        File Transfer
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <div class="value">70%</div>
+                </li>
+                <li>
+                    <p class="has-hr">
+                        <span class="text-primary">300条</span>发送成功，<span class="text-warning">40条</span>失败
+                    </p>
+
+                    <div class="actions">
+                        <button class="h-btn h-btn-link">知道了</button>
+                        <button class="h-btn h-btn-warning">重发失败</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
