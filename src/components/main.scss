@@ -84,14 +84,8 @@
       background: #eee;
 
       > ul {
-        transform: translate(0, 0);
-        transition: .3s ease;
-        display: flex;
-        flex-flow: row nowrap;
-
         &.scene1 {
           height: 31px;
-          transform: translate(0, 0);
         }
 
         &.scene2 {
@@ -100,14 +94,9 @@
 
         &.scene3 {
           height: 70px;
-          transform: translate(-200%, 0);
         }
 
         li {
-          width: 100%;
-          flex: none;
-          padding: 0 10px;
-
           h2 {
             font-size: 14px;
           }

@@ -28,6 +28,7 @@ tools.init().then(() => {
 
             tools.initService(services)
             angular.element('body').append(tools.initComponents(mainComponent))
+            angular.element('body').append(tools.initComponents(sendComponent))
 
             /*     let mainComponent = tools.injectComponent(Main)
 

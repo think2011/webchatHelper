@@ -10,13 +10,13 @@
         <span class="text-muted">by David & think2011</span>
 
         <div class="h-panel-body">
-            <ul class="scene1">
-                <li class="text-center">
-                    <button class="h-btn">
+            <ul class="h-scene" ng-class="['scene' + ctrl.scene]">
+                <li class="item text-center">
+                    <button ng-click="ctrl.toScene(3)" class="h-btn">
                         群发信息
                     </button>
                 </li>
-                <li>
+                <li class="item">
                     <h2 class="has-hr">
                         <div class="pull-right">10/300</div>
 
@@ -34,13 +34,13 @@
                     </div>
                     <div class="value">70%</div>
                 </li>
-                <li>
+                <li class="item">
                     <p class="has-hr">
                         <span class="text-primary">300条</span>发送成功，<span class="text-warning">40条</span>失败
                     </p>
 
                     <div class="actions">
-                        <button class="h-btn h-btn-link">知道了</button>
+                        <button ng-click="ctrl.toScene(1)" class="h-btn h-btn-link">知道了</button>
                         <button class="h-btn h-btn-warning">重发失败</button>
                     </div>
                 </li>
