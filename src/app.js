@@ -3,7 +3,7 @@
 import tools from './tools'
 import mainComponent from './components/main'
 import sendComponent from './components/send'
-import NgTransfer from './ng-transfer/ng-transfer'
+// import NgTransfer from './ng-transfer/ng-transfer'
 
 import './styles/common.scss'
 
@@ -11,15 +11,17 @@ tools.init().then(() => {
     let $injector = angular.element(document).injector()
 
     $injector.invoke([
-        '$rootScope', '$sce', '$timeout', 'ngDialog', '$compile', 'chatFactory', 'accountFactory', '$http',
-        function ($rootScope, $sce, $timeout, ngDialog, $compile, chatFactory, accountFactory, $http) {
+        '$rootScope', '$sce', '$timeout', 'ngDialog', '$compile', 'chatFactory', 'accountFactory', '$http', 'contactFactory', 'reportService',
+        function ($rootScope, $sce, $timeout, ngDialog, $compile, chatFactory, accountFactory, $http, contactFactory, reportService) {
             let services = {
                 $rootScope,
                 $timeout,
                 $compile,
                 $http,
+                reportService,
                 chatFactory,
-                accountFactory
+                accountFactory,
+                contactFactory
             }
 
             $rootScope.trustAsHtml = function (str) {
@@ -27,8 +29,27 @@ tools.init().then(() => {
             }
 
             tools.initService(services)
+
             angular.element('body').append(tools.initComponents(mainComponent))
             angular.element('body').append(tools.initComponents(sendComponent))
+            $rootScope.$emit('helper:send:show')
+
+            let interval = setInterval(() => {
+                let contacts = contactFactory.pickContacts(["friend", "chatroom"], {
+                    friend  : {
+                        noHeader      : true,
+                        isWithoutBrand: true
+                    },
+                    chatroom: {
+                        noHeader      : true,
+                        isWithoutBrand: true
+                    },
+                }, true)
+
+                if (contacts.result.length > 30) {
+                    clearInterval(interval)
+                }
+            }, 1000)
 
             /*     let mainComponent = tools.injectComponent(Main)
 

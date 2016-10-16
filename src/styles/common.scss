@@ -3,6 +3,7 @@ $color-warning: #FF6600;
 
 @import "./steps";
 @import "./scene";
+@import "./nav";
 @import "../components/main";
 @import "../components/send";
 
@@ -95,4 +96,8 @@ $color-warning: #FF6600;
       color: darken(#777, 10%);
     }
   }
+}
+
+.content {
+  padding: 10px 30px;
 }

@@ -60,7 +60,7 @@
     transition: transform .3s ease;
     border-radius: 0 0 5px 5px;
     box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.59);
-    background: #fff;
+    background: #eee;
 
     h1 {
       font-size: 20px;
@@ -82,7 +82,7 @@
       border-radius: 0 0 5px 5px;
       overflow: hidden;
       padding: 12px 0;
-      background: #eee;
+      background: #fff;
 
       > ul {
         &.scene1 {

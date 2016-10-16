@@ -35,8 +35,8 @@
   }
 
   &.step-2 {
-    width: 520px;
-    height: 762px;
+    width: 800px;
+    height: 670px;
   }
 
   .head {
@@ -72,6 +72,69 @@
         font-size: 15px;
         height: 150px;
         border: 1px solid #ccc;
+      }
+    }
+  }
+
+  .transfer {
+    width: 300px;
+    min-height: 470px;
+    border: 1px solid #eee;
+    display: inline-block;
+    overflow: hidden;
+    border-radius: 5px;
+
+    .tool-bar {
+      display: flex;
+      padding: 5px 8px 8px;
+      font-size: 14px;
+      align-items: center;
+      position: relative;
+      border-bottom: 1px solid #eee;
+
+      label {
+        margin-right: 10px;
+        margin-left: 2px;
+      }
+
+      input {
+        padding: 5px 8px;
+        flex: 1;
+        border: 1px solid #ddd;
+      }
+
+      i.addchat_searchicon {
+        position: absolute;
+        right: 12px;
+      }
+    }
+
+    .item {
+      display: flex;
+      flex-flow: column nowrap;
+      max-height: 387px;
+      overflow: auto;
+
+      li {
+        display: flex;
+        align-items: center;
+        padding: 5px 10px;
+        flex: none;
+
+        &:nth-child(even) {
+          background: #F0F0F0;
+        }
+
+        i {
+
+        }
+
+        img {
+          width: 35px;
+          height: 35px;
+          border-radius: 3px;
+          margin: 0 10px 0 5px;
+        }
       }
     }
   }

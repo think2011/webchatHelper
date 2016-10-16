@@ -1,0 +1,26 @@
+.nav {
+  display: flex;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #eee;
+
+  li {
+    a {
+      color: #333;
+      text-decoration: none;
+      padding: 6px 12px;
+      display: inline-block;
+      transition: .3s;
+      border-bottom: 2px solid transparent;
+    }
+
+    &.active {
+      a {
+        border-bottom: 2px solid #02B300;
+      }
+    }
+  }
+
+  &-underline {
+
+  }
+}

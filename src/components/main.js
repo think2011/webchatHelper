@@ -10,6 +10,11 @@ class Ctrl {
     toScene(index) {
         this.scene = index
     }
+
+    showSend() {
+        this.services.$rootScope.$emit('helper:send:show')
+        this.active = false
+    }
 }
 
 export default {
