@@ -7,6 +7,34 @@ $color-warning: #FF6600;
 @import "../components/main";
 @import "../components/send";
 
+@for $i from 1 through 50 {
+  .m-t-#{$i} {
+    margin-top: #{$i}px;
+  }
+  .m-r-#{$i} {
+    margin-right: #{$i}px;
+  }
+  .m-b-#{$i} {
+    margin-bottom: #{$i}px;
+  }
+  .m-l-#{$i} {
+    margin-left: #{$i}px;
+  }
+
+  .p-t-#{$i} {
+    padding-top: #{$i}px;
+  }
+  .p-r-#{$i} {
+    padding-right: #{$i}px;
+  }
+  .p-b-#{$i} {
+    padding-bottom: #{$i}px;
+  }
+  .p-l-#{$i} {
+    padding-left: #{$i}px;
+  }
+}s
+
 .text-muted {
   color: #999;
 }

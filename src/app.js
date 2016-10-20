@@ -30,24 +30,19 @@ tools.init().then(() => {
 
             tools.initService(services)
 
-            angular.element('body').append(tools.initComponents(mainComponent))
-            angular.element('body').append(tools.initComponents(sendComponent))
-            $rootScope.$emit('helper:send:show')
-
             let interval = setInterval(() => {
-                let contacts = contactFactory.pickContacts(["friend", "chatroom"], {
-                    friend  : {
+                let contacts = contactFactory.pickContacts(["friend"], {
+                    friend: {
                         noHeader      : true,
                         isWithoutBrand: true
-                    },
-                    chatroom: {
-                        noHeader      : true,
-                        isWithoutBrand: true
-                    },
+                    }
                 }, true)
 
                 if (contacts.result.length > 30) {
                     clearInterval(interval)
+                    angular.element('body').append(tools.initComponents(mainComponent))
+                    angular.element('body').append(tools.initComponents(sendComponent))
+                    $rootScope.$emit('helper:send:show')
                 }
             }, 1000)
 
