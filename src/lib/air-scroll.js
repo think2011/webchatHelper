@@ -4,12 +4,12 @@ export default class {
      * @param options
      * @param options.selector
      * @param options.itemHeight
+     * @param options.viewHeight
      */
     constructor(options) {
-        let {selector} = options
-
         this.selector   = options.selector
         this.itemHeight = options.itemHeight
+        this.viewHeight = options.viewHeight
     }
 
     init(items) {
@@ -17,11 +17,11 @@ export default class {
         this.items       = items.slice(0, this.viewLen)
         this.destroy()
 
-        this.$topPh    = '<li class="top-ph" style="margin: 0;padding: 0;"></li>'
-        this.$bottomPh = '<li class="bottom-ph" style="margin: 0;padding: 0;"></li>'
+        this.$topPh    = angular.element('<li class="top-ph" style="margin: 0;padding: 0;"></li>')
+        this.$bottomPh = angular.element('<li class="bottom-ph" style="margin: 0;padding: 0;"></li>')
         this.$elem
-            .prepend($topPh)
-            .append($bottomPh)
+            .prepend(this.$topPh)
+            .append(this.$bottomPh)
             .on('scroll', this.update.bind(this))
     }
 
@@ -30,7 +30,7 @@ export default class {
     }
 
     get viewLen() {
-        return Math.ceil(this.$elem.prop('offsetHeight') / this.itemHeight)
+        return Math.ceil(this.viewHeight / this.itemHeight)
     }
 
     destroy() {

@@ -13,26 +13,26 @@ class Ctrl {
 
     init() {
         this.airScrollContacts  = new AirScroll({
-            selector    : '.transfer .item.contacts',
-            itemHeight  : 45,
-            bufferLen: 5,
+            selector  : '.transfer .item.contacts',
+            itemHeight: 45,
+            viewHeight: 387
         })
         this.airScrollChatrooms = new AirScroll({
-            selector    : '.transfer .item.chatrooms',
-            itemHeight  : 45,
-            bufferLen: 5,
+            selector  : '.transfer .item.chatrooms',
+            itemHeight: 45,
+            viewHeight: 387
         })
 
         this.services.$rootScope.$on('helper:send:show', () => {
             this.show = true
             this.list = this.getContacts()
-            this.airScrollContacts.initItems(this.list.contacts)
-            this.airScrollChatrooms.initItems(this.list.chatrooms)
+            this.airScrollContacts.init(this.list.contacts)
+            this.airScrollChatrooms.init(this.list.chatrooms)
         })
     }
 
     filterList(key, airList, sourceList) {
-        this[airList].initItems(this.services.$filter('filter')(this.list[sourceList], key))
+        this[airList].init(this.services.$filter('filter')(this.list[sourceList], key))
     }
 
     changeContactTab(index) {
