@@ -55,7 +55,6 @@ export default class {
                 this.$bottomPlaceholder.css({height: 0})
             }
             this.items = sourceItems.slice(start, end)
-
         })
     }
 
@@ -63,10 +62,6 @@ export default class {
         let {itemHeight, bufferLength, selector} = this.options
         let $handle             = angular.element(selector)
         let currentScrollHeight = $handle.scrollTop()
-
-        if (this.sourceItems.length * itemHeight - currentScrollHeight <= itemHeight) {
-            return
-        }
 
         if (currentScrollHeight > bufferLength * itemHeight) {
             this.setItems(currentScrollHeight / itemHeight)

@@ -25,6 +25,8 @@ tools.init().then(() => {
                 $filter
             }
 
+            window.xx = $filter
+
             $rootScope.trustAsHtml = function (str) {
                 return $sce.trustAsHtml(str)
             }

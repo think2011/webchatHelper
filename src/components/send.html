@@ -52,17 +52,17 @@
                                 <div class="tool-bar">
                                     <label>
                                         <i class="web_wechat_choose_wireframe"></i>
-                                        {{ctrl.airScrollContact.sourceItems.length}}条
+                                        {{ctrl.airScrollContacts.sourceItems.length}}条
                                     </label>
                                     <input ng-model="ctrl.contactKey"
-                                           ng-change="ctrl.filterList(ctrl.contactKey, 'airScrollContact','contacts')"
+                                           ng-change="ctrl.filterList(ctrl.contactKey, 'airScrollContacts','contacts')"
                                            type="text" placeholder="输入任意内容搜索">
                                     <i class="addchat_searchicon"></i>
                                 </div>
 
 
-                                <ul class="item contact">
-                                    <li ng-repeat="item in ctrl.airScrollContact.items track by item.UserName">
+                                <ul class="item contacts">
+                                    <li ng-repeat="item in ctrl.airScrollContacts.items track by item.UserName">
                                         <i class="web_wechat_choose_wireframe"></i>
                                         <img class="img"
                                              ng-src="{{item.HeadImgUrl}}"
@@ -77,29 +77,23 @@
                                 <div class="tool-bar">
                                     <label>
                                         <i class="web_wechat_choose_wireframe"></i>
-                                        144条
+                                        {{ctrl.airScrollChatrooms.sourceItems.length}}条
                                     </label>
-                                    <input type="text" placeholder="输入任意内容搜索">
+                                    <input ng-model="ctrl.chatroomsKey"
+                                           ng-change="ctrl.filterList(ctrl.chatroomsKey, 'airScrollChatrooms','chatrooms')"
+                                           type="text" placeholder="输入任意内容搜索">
                                     <i class="addchat_searchicon"></i>
                                 </div>
 
-
-                                <ul class="item">
-                                    <li>
+                                <ul class="item chatrooms">
+                                    <li ng-repeat="item in ctrl.airScrollChatrooms.items track by item.UserName">
                                         <i class="web_wechat_choose_wireframe"></i>
                                         <img class="img"
-                                             src="/cgi-bin/mmwebwx-bin/webwxgeticon?seq=628251967&amp;username=@156f64a4cf598c68bd206340e44c14b409def09ec4516864025f3cd54896cdc4&amp;skey=@crypt_cf81dc07_b21c0b5a9370efb66c4f25df461d9082"
-                                             mm-src="/cgi-bin/mmwebwx-bin/webwxgeticon?seq=628251967&amp;username=@156f64a4cf598c68bd206340e44c14b409def09ec4516864025f3cd54896cdc4&amp;skey=@crypt_cf81dc07_b21c0b5a9370efb66c4f25df461d9082"
+                                             ng-src="{{item.HeadImgUrl}}"
                                              alt="">
-                                        testte
-                                    </li>
-                                    <li>
-                                        <i class="web_wechat_choose_wireframe"></i>
-                                        <img class="img"
-                                             src="/cgi-bin/mmwebwx-bin/webwxgeticon?seq=628251967&amp;username=@156f64a4cf598c68bd206340e44c14b409def09ec4516864025f3cd54896cdc4&amp;skey=@crypt_cf81dc07_b21c0b5a9370efb66c4f25df461d9082"
-                                             mm-src="/cgi-bin/mmwebwx-bin/webwxgeticon?seq=628251967&amp;username=@156f64a4cf598c68bd206340e44c14b409def09ec4516864025f3cd54896cdc4&amp;skey=@crypt_cf81dc07_b21c0b5a9370efb66c4f25df461d9082"
-                                             alt="">
-                                        testte
+                                        <span title="{{item.RemarkName || item.NickName}}"
+                                              ng-bind-html="trustAsHtml(item.RemarkName || item.NickName)">
+                                        </span>
                                     </li>
                                 </ul>
                             </section>
