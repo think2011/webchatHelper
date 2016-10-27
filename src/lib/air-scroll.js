@@ -37,8 +37,7 @@ export default class {
 
     setItems(start) {
         let {showLength, $rootScope, $timeout, bufferLength, itemHeight} = this.options
-        let sourceItems = this.sourceItems
-
+        let sourceItems       = this.sourceItems
         let allHeight         = sourceItems.length * itemHeight
         let topHeight         = start * itemHeight
         let currentItemHeight = this.$handle.height()
@@ -51,8 +50,8 @@ export default class {
             let end = Math.ceil(start + currentItemHeight / itemHeight + bufferLength)
             if (end <= bufferLength) end = 20
 
-            if (bottomHeight <= 0) {
-                this.$bottomPlaceholder.css({height: 0})
+            if (bottomHeight < itemHeight && this.sourceItems.length >= 20) {
+                return this.$bottomPlaceholder.css({height: 0})
             }
             this.items = sourceItems.slice(start, end)
         })
