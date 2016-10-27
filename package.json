@@ -4,7 +4,7 @@
   "description": "微信群发助手",
   "main": "index.js",
   "scripts": {
-    "dev": "rm -rf ./dist && webpack -w -d --profile",
+    "dev": "rm -rf ./dist && webpack -w --profile",
     "build": "rm -rf ./dist && webpack -p --progress --devtool ''",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

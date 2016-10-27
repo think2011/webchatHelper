@@ -11,8 +11,8 @@ tools.init().then(() => {
     let $injector = angular.element(document).injector()
 
     $injector.invoke([
-        '$rootScope', '$sce', '$timeout', 'ngDialog', '$compile', 'chatFactory', 'accountFactory', '$http', 'contactFactory', 'reportService',
-        function ($rootScope, $sce, $timeout, ngDialog, $compile, chatFactory, accountFactory, $http, contactFactory, reportService) {
+        '$rootScope', '$sce', '$timeout', 'ngDialog', '$compile', 'chatFactory', 'accountFactory', '$http', 'contactFactory', 'reportService', '$filter',
+        function ($rootScope, $sce, $timeout, ngDialog, $compile, chatFactory, accountFactory, $http, contactFactory, reportService, $filter) {
             let services = {
                 $rootScope,
                 $timeout,
@@ -21,7 +21,8 @@ tools.init().then(() => {
                 reportService,
                 chatFactory,
                 accountFactory,
-                contactFactory
+                contactFactory,
+                $filter
             }
 
             $rootScope.trustAsHtml = function (str) {

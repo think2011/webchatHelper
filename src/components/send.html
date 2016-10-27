@@ -17,8 +17,9 @@
             </li>
         </ul>
 
-
+        <!-- steps -->
         <ul class="h-scene scene{{ctrl.step}}">
+            <!-- step1 -->
             <li>
                 <div class="editor">
                     <pre contenteditable="true"></pre>
@@ -29,8 +30,10 @@
                 </div>
             </li>
 
+            <!-- step2 -->
             <li>
                 <div class="content">
+                    <!-- 待选 -->
                     <div class="transfer">
                         <ul class="nav nav-underline">
                             <li ng-class="{active:ctrl.contactTab === 1}">
@@ -49,15 +52,17 @@
                                 <div class="tool-bar">
                                     <label>
                                         <i class="web_wechat_choose_wireframe"></i>
-                                        {{ctrl.list.contacts.length}}条
+                                        {{ctrl.airScrollContact.sourceItems.length}}条
                                     </label>
-                                    <input type="text" placeholder="输入任意内容搜索">
+                                    <input ng-model="ctrl.contactKey"
+                                           ng-change="ctrl.filterList(ctrl.contactKey, 'airScrollContact','contacts')"
+                                           type="text" placeholder="输入任意内容搜索">
                                     <i class="addchat_searchicon"></i>
                                 </div>
 
 
-                                <ul class="item">
-                                    <li ng-repeat="item in ctrl.list.contacts track by item.UserName">
+                                <ul class="item contact">
+                                    <li ng-repeat="item in ctrl.airScrollContact.items track by item.UserName">
                                         <i class="web_wechat_choose_wireframe"></i>
                                         <img class="img"
                                              ng-src="{{item.HeadImgUrl}}"
@@ -119,7 +124,7 @@
                         </div>
                     </div>
 
-
+                    <!-- 已选 -->
                     <div class="transfer pull-right">
                         <ul class="nav nav-underline">
                             <li>

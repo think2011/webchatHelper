@@ -4,7 +4,6 @@ export default class {
      * @param options
      * @param options.selector  元素选择器
      * @param options.itemHeight
-     * @param options.showLength
      * @param options.bufferLength
      * @param options.$scope
      * @param options.$timeout
@@ -13,43 +12,50 @@ export default class {
         let {selector} = options
 
         this.options = options
+    }
 
-        let $handle = angular.element(selector)
+    init() {
+        let $handle = this.$handle = angular.element(this.options.selector)
 
-        $handle
-            .prepend('<div class="top-placeholder"></div>')
-            .append('<div class="bottom-placeholder"></div>')
+        $handle.find('.top-placeholder').remove()
+        $handle.find('.bottom-placeholder').remove()
+
+        $handle.prepend('<li class="top-placeholder" style="margin: 0;padding: 0;"></li>')
+        $handle.append('<li class="bottom-placeholder" style="margin: 0;padding: 0;"></li>')
 
         this.$topPlaceholder    = $handle.find('.top-placeholder')
         this.$bottomPlaceholder = $handle.find('.bottom-placeholder')
-
-        $handle.on('scroll', this.updateItems.bind(this))
+        this.$handle.off().on('scroll', this.updateItems.bind(this))
     }
 
     initItems(sourceItems) {
-        let {bufferLength, showLength} = this.options
-
-        this.items           = []
-        this.sourceItems     = sourceItems
-        this.viewItemsLength = showLength + bufferLength
+        this.items       = []
+        this.sourceItems = sourceItems
+        this.init()
         this.updateItems()
     }
 
     setItems(start) {
-        start           = Math.floor(start)
-        let {showLength, $rootScope, itemHeight} = this.options
+        let {showLength, $rootScope, $timeout, bufferLength, itemHeight} = this.options
         let sourceItems = this.sourceItems
 
-        let allHeight         = (sourceItems.length - showLength) * itemHeight
+        let allHeight         = sourceItems.length * itemHeight
         let topHeight         = start * itemHeight
-        let currentItemHeight = showLength * itemHeight
+        let currentItemHeight = this.$handle.height()
         let bottomHeight      = allHeight - topHeight - currentItemHeight
 
         this.$topPlaceholder.css({height: topHeight})
         this.$bottomPlaceholder.css({height: bottomHeight})
 
-        $rootScope.safeApply(() => {
-            this.items = sourceItems.slice(start, start + this.viewItemsLength)
+        $timeout(() => {
+            let end = Math.ceil(start + currentItemHeight / itemHeight + bufferLength)
+            if (end <= bufferLength) end = 20
+
+            if (bottomHeight <= 0) {
+                this.$bottomPlaceholder.css({height: 0})
+            }
+            this.items = sourceItems.slice(start, end)
+
         })
     }
 
@@ -57,6 +63,10 @@ export default class {
         let {itemHeight, bufferLength, selector} = this.options
         let $handle             = angular.element(selector)
         let currentScrollHeight = $handle.scrollTop()
+
+        if (this.sourceItems.length * itemHeight - currentScrollHeight <= itemHeight) {
+            return
+        }
 
         if (currentScrollHeight > bufferLength * itemHeight) {
             this.setItems(currentScrollHeight / itemHeight)
