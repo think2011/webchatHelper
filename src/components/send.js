@@ -15,18 +15,12 @@ class Ctrl {
         this.airScrollContacts  = new AirScroll({
             selector    : '.transfer .item.contacts',
             itemHeight  : 45,
-            bufferLength: 5,
-            $scope      : this.services.$scope,
-            $rootScope  : this.services.$rootScope,
-            $timeout    : this.services.$timeout
+            bufferLen: 5,
         })
         this.airScrollChatrooms = new AirScroll({
             selector    : '.transfer .item.chatrooms',
             itemHeight  : 45,
-            bufferLength: 5,
-            $scope      : this.services.$scope,
-            $rootScope  : this.services.$rootScope,
-            $timeout    : this.services.$timeout
+            bufferLen: 5,
         })
 
         this.services.$rootScope.$on('helper:send:show', () => {
