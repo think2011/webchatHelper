@@ -59,7 +59,7 @@ export default class {
     }
 
     render(start) {
-        this.$scope.$apply(() => {
+        this.$scope.safeApply(() => {
             let end    = start + this.viewLen + 3
             this.items = this.sourceItems.slice(start, end)
 
@@ -76,3 +76,5 @@ export default class {
         this.init()
     }
 }
+
+
