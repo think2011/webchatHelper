@@ -60,7 +60,7 @@ export default class {
 
     render(start) {
         this.$scope.safeApply(() => {
-            let end    = start + this.viewLen + 3
+            let end    = start + this.viewLen
             this.items = this.sourceItems.slice(start, end)
 
             let topH     = start * this.itemHeight

@@ -48,10 +48,13 @@
                         </ul>
 
                         <div class="h-scene scene{{ctrl.contactTab}}">
+                            <!-- 联系人 -->
                             <section>
                                 <div class="tool-bar">
                                     <label>
-                                        <i class="web_wechat_choose_wireframe"></i>
+                                        <i ng-click="ctrl.checker.allCheck()"
+                                           ng-class="{true:'web_wechat_choose_green', false:'web_wechat_choose_wireframe'}[ctrl.checker.isAllChecked]"
+                                           class="web_wechat_choose_wireframe"></i>
                                         {{ctrl.airScrollContacts.sourceItems.length}}条
                                     </label>
                                     <input ng-model="ctrl.contactKey"
@@ -62,8 +65,9 @@
 
 
                                 <ul class="item contacts">
-                                    <li ng-repeat="item in ctrl.airScrollContacts.items track by item.UserName">
-                                        <i class="web_wechat_choose_wireframe"></i>
+                                    <li ng-click="ctrl.checker.check(item,!item._checked)"
+                                        ng-repeat="item in ctrl.airScrollContacts.items track by item.UserName">
+                                        <i ng-class="{true:'web_wechat_choose_green', false:'web_wechat_choose_wireframe'}[!!item._checked]"></i>
                                         <img class="img"
                                              ng-src="{{item.HeadImgUrl}}"
                                              alt="">
@@ -73,6 +77,8 @@
                                     </li>
                                 </ul>
                             </section>
+
+                            <!-- 讨论组 -->
                             <section>
                                 <div class="tool-bar">
                                     <label>
@@ -97,6 +103,8 @@
                                     </li>
                                 </ul>
                             </section>
+
+                            <!-- 分组 -->
                             <section>
                                 <div class="tool-bar">
                                     <label>
@@ -135,21 +143,13 @@
                         </div>
 
                         <ul class="item">
-                            <li>
-                                <i class="web_wechat_choose_wireframe"></i>
+                            <li ng-repeat="item in ctrl.checker.checkedItems track by item.UserName">
                                 <img class="img"
-                                     src="/cgi-bin/mmwebwx-bin/webwxgeticon?seq=628251967&amp;username=@156f64a4cf598c68bd206340e44c14b409def09ec4516864025f3cd54896cdc4&amp;skey=@crypt_cf81dc07_b21c0b5a9370efb66c4f25df461d9082"
-                                     mm-src="/cgi-bin/mmwebwx-bin/webwxgeticon?seq=628251967&amp;username=@156f64a4cf598c68bd206340e44c14b409def09ec4516864025f3cd54896cdc4&amp;skey=@crypt_cf81dc07_b21c0b5a9370efb66c4f25df461d9082"
+                                     ng-src="{{item.HeadImgUrl}}"
                                      alt="">
-                                testte
-                            </li>
-                            <li>
-                                <i class="web_wechat_choose_wireframe"></i>
-                                <img class="img"
-                                     src="/cgi-bin/mmwebwx-bin/webwxgeticon?seq=628251967&amp;username=@156f64a4cf598c68bd206340e44c14b409def09ec4516864025f3cd54896cdc4&amp;skey=@crypt_cf81dc07_b21c0b5a9370efb66c4f25df461d9082"
-                                     mm-src="/cgi-bin/mmwebwx-bin/webwxgeticon?seq=628251967&amp;username=@156f64a4cf598c68bd206340e44c14b409def09ec4516864025f3cd54896cdc4&amp;skey=@crypt_cf81dc07_b21c0b5a9370efb66c4f25df461d9082"
-                                     alt="">
-                                testte
+                                <span title="{{item.RemarkName || item.NickName}}"
+                                      ng-bind-html="trustAsHtml(item.RemarkName || item.NickName)">
+                                        </span>
                             </li>
                         </ul>
                     </div>

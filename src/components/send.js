@@ -1,5 +1,6 @@
 import html from './send.html'
 import AirScroll from '../lib/air-scroll'
+import Checker from '../lib/Checker'
 
 class Ctrl {
     constructor(services) {
@@ -16,13 +17,13 @@ class Ctrl {
             selector  : '.transfer .item.contacts',
             itemHeight: 45,
             viewHeight: 387,
-            $scope : this.services.$rootScope
+            $scope    : this.services.$rootScope
         })
         this.airScrollChatrooms = new AirScroll({
             selector  : '.transfer .item.chatrooms',
             itemHeight: 45,
             viewHeight: 387,
-            $scope : this.services.$rootScope
+            $scope    : this.services.$rootScope
         })
 
         this.services.$rootScope.$on('helper:send:show', () => {
@@ -30,6 +31,11 @@ class Ctrl {
             this.list = this.getContacts()
             this.airScrollContacts.init(this.list.contacts)
             this.airScrollChatrooms.init(this.list.chatrooms)
+            this.checker = new Checker({
+                context: this.list,
+                itemKey: 'contacts',
+                idKey  : 'UserName'
+            })
         })
     }
 
