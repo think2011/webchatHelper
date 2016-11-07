@@ -31,9 +31,14 @@ class Ctrl {
             this.list = this.getContacts()
             this.airScrollContacts.init(this.list.contacts)
             this.airScrollChatrooms.init(this.list.chatrooms)
-            this.checker = new Checker({
+            this.contactsChecker  = new Checker({
                 context: this.list,
                 itemKey: 'contacts',
+                idKey  : 'UserName'
+            })
+            this.chatroomsChecker = new Checker({
+                context: this.list,
+                itemKey: 'chatrooms',
                 idKey  : 'UserName'
             })
         })

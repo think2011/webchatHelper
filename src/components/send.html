@@ -51,10 +51,9 @@
                             <!-- 联系人 -->
                             <section>
                                 <div class="tool-bar">
-                                    <label>
-                                        <i ng-click="ctrl.checker.allCheck()"
-                                           ng-class="{true:'web_wechat_choose_green', false:'web_wechat_choose_wireframe'}[ctrl.checker.isAllChecked]"
-                                           class="web_wechat_choose_wireframe"></i>
+                                    <label class="cursor-pointer" ng-click="ctrl.contactsChecker.allCheck()">
+                                        <i ng-class="{true:'web_wechat_choose_green', false:'web_wechat_choose_wireframe'}[ctrl.contactsChecker.isAllChecked]">
+                                        </i>
                                         {{ctrl.airScrollContacts.sourceItems.length}}条
                                     </label>
                                     <input ng-model="ctrl.contactKey"
@@ -65,7 +64,7 @@
 
 
                                 <ul class="item contacts">
-                                    <li ng-click="ctrl.checker.check(item,!item._checked)"
+                                    <li ng-click="ctrl.contactsChecker.check(item,!item._checked)"
                                         ng-repeat="item in ctrl.airScrollContacts.items track by item.UserName">
                                         <i ng-class="{true:'web_wechat_choose_green', false:'web_wechat_choose_wireframe'}[!!item._checked]"></i>
                                         <img class="img"
@@ -81,8 +80,8 @@
                             <!-- 讨论组 -->
                             <section>
                                 <div class="tool-bar">
-                                    <label>
-                                        <i class="web_wechat_choose_wireframe"></i>
+                                    <label class="cursor-pointer" ng-click="ctrl.chatroomsChecker.allCheck()">
+                                        <i ng-class="{true:'web_wechat_choose_green', false:'web_wechat_choose_wireframe'}[ctrl.chatroomsChecker.isAllChecked]"></i>
                                         {{ctrl.airScrollChatrooms.sourceItems.length}}条
                                     </label>
                                     <input ng-model="ctrl.chatroomsKey"
@@ -92,8 +91,9 @@
                                 </div>
 
                                 <ul class="item chatrooms">
-                                    <li ng-repeat="item in ctrl.airScrollChatrooms.items track by item.UserName">
-                                        <i class="web_wechat_choose_wireframe"></i>
+                                    <li ng-click="ctrl.chatroomsChecker.check(item,!item._checked)"
+                                        ng-repeat="item in ctrl.airScrollChatrooms.items track by item.UserName">
+                                        <i ng-class="{true:'web_wechat_choose_green', false:'web_wechat_choose_wireframe'}[!!item._checked]"></i>
                                         <img class="img"
                                              ng-src="{{item.HeadImgUrl}}"
                                              alt="">
@@ -136,14 +136,25 @@
 
                         <div class="tool-bar">
                             <label>
-                                144条
+                                {{ctrl.chatroomsChecker.checkedItems.length +
+                                ctrl.contactsChecker.checkedItems.length}}条
                             </label>
-                            <input type="text" placeholder="输入任意内容搜索">
+                            <input type="text" ng-model="ctrl.checkedKey" placeholder="输入任意内容搜索">
                             <i class="addchat_searchicon"></i>
                         </div>
 
                         <ul class="item">
-                            <li ng-repeat="item in ctrl.checker.checkedItems track by item.UserName">
+                            <li ng-click="ctrl.chatroomsChecker.check(item,false)"
+                                ng-repeat="item in ctrl.chatroomsChecker.checkedItems | filter:ctrl.checkedKey track by item.UserName">
+                                <img class="img"
+                                     ng-src="{{item.HeadImgUrl}}"
+                                     alt="">
+                                <span title="{{item.RemarkName || item.NickName}}"
+                                      ng-bind-html="trustAsHtml(item.RemarkName || item.NickName)">
+                                        </span>
+                            </li>
+                            <li ng-click="ctrl.contactsChecker.check(item,false)"
+                                ng-repeat="item in ctrl.contactsChecker.checkedItems | filter:ctrl.checkedKey track by item.UserName">
                                 <img class="img"
                                      ng-src="{{item.HeadImgUrl}}"
                                      alt="">
