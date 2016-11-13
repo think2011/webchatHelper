@@ -11,14 +11,15 @@ tools.init().then(() => {
     let $injector = angular.element(document).injector()
 
     $injector.invoke([
-        '$rootScope', '$sce', '$timeout', 'ngDialog', '$compile', 'chatFactory', 'accountFactory', '$http', 'contactFactory', 'reportService', '$filter',
-        function ($rootScope, $sce, $timeout, ngDialog, $compile, chatFactory, accountFactory, $http, contactFactory, reportService, $filter) {
+        '$rootScope', '$sce', '$timeout', 'ngDialog', '$compile', 'chatFactory', 'accountFactory', '$http', 'contactFactory', 'reportService', '$filter','$q',
+        function ($rootScope, $sce, $timeout, ngDialog, $compile, chatFactory, accountFactory, $http, contactFactory, reportService, $filter,$q) {
             let services = {
                 $rootScope,
                 $timeout,
                 $compile,
                 $http,
                 reportService,
+                $q,
                 chatFactory,
                 accountFactory,
                 contactFactory,

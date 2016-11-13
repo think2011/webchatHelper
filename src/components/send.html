@@ -168,7 +168,9 @@
 
                 <div class="footer text-right">
                     <button ng-click="ctrl.toNext(1)" class="h-btn h-btn-link">上一步</button>
-                    <button ng-click="ctrl.toNext(3)" class="h-btn">下一步</button>
+                    <button ng-disabled="!(ctrl.contactsChecker.checkedItems.length || ctrl.chatroomsChecker.checkedItems.length)"
+                            ng-click="ctrl.toNext(3)" class="h-btn">下一步
+                    </button>
                 </div>
             </li>
 

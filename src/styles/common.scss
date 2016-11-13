@@ -65,7 +65,7 @@ $color-warning: #FF6600;
   font-size: 13px;
   margin-bottom: 10px;
   background: #CCCCCC;
-  transition: .3s ease;
+  transition: .3s;
 
   &-bar {
     height: 100%;
@@ -94,6 +94,14 @@ $color-warning: #FF6600;
   white-space: nowrap;
   background: $color-primary;
   transition: .3s ease;
+
+  &[disabled] {
+    background: #ddd;
+
+    &:hover {
+      background: darken(#ddd, 5%);
+    }
+  }
 
   &:hover {
     background: darken($color-primary, 5%);

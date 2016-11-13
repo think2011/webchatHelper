@@ -28,7 +28,9 @@
                         <img class="img"
                              ng-src="{{ctrl.sendData.curAccount.HeadImgUrl}}"
                              alt="">
-                        {{ctrl.sendData.curAccount.RemarkName || ctrl.sendData.curAccount.NickName}}
+                        <span title="{{ctrl.sendData.curAccount.RemarkName || ctrl.sendData.curAccount.NickName}}"
+                              ng-bind-html="trustAsHtml(ctrl.sendData.curAccount.RemarkName || ctrl.sendData.curAccount.NickName)">
+                                        </span>
                     </div>
                     <div style="width: {{ctrl.sendData.progress + '%'}};" class="progress">
                         <div class="progress-bar"></div>
@@ -37,15 +39,18 @@
                 </li>
                 <li class="item">
                     <p class="has-hr">
-                        <span class="text-primary">{{ctrl.sendData.sendLen}}条</span>发送成功，
-                        <span class="text-warning">{{ctrl.sendData.allLen - ctrl.sendData.sendLen}}条</span>失败
+                        <span class="text-primary">{{ctrl.sendData.allLen - ctrl.sendData.failList.length}}条</span>发送成功，
+                        <span class="text-warning">{{ctrl.sendData.failList.length}}条</span>失败
                     </p>
 
                     <div class="actions">
                         <button ng-class="{true:'h-btn-link',false: 'h-btn-primary'}[!!ctrl.sendData.failList.length]"
                                 ng-click="ctrl.toScene(1);ctrl.active=false;" class="h-btn">知道了
                         </button>
-                        <button ng-if="ctrl.sendData.failList.length" class="h-btn h-btn-warning">重发失败</button>
+                        <button ng-if="ctrl.sendData.failList.length"
+                                ng-click="ctrl.showSend(ctrl.sendData.failList,ctrl.sendData.msg)"
+                                class="h-btn h-btn-warning">重发失败
+                        </button>
                     </div>
                 </li>
             </ul>

@@ -9,10 +9,10 @@ class Ctrl {
         this.step       = 2
         this.contactTab = 1
 
-        this.init()
+        this._init()
     }
 
-    init() {
+    _init() {
         this.airScrollContacts  = new AirScroll({
             selector  : '.transfer .item.contacts',
             itemHeight: 45,
@@ -26,54 +26,13 @@ class Ctrl {
             $scope    : this.services.$rootScope
         })
 
-        this.services.$rootScope.$on('helper:send:show', () => {
+        this._initEvent()
+    }
+
+    _initEvent() {
+        this.services.$rootScope.$on('helper:send:show', (event, listData, msg) => {
+            this.model = {}
             this.show  = true
-            this.model = {
-                msg : 'test',
-                list: [
-                    {
-                        "RemarkPYQuanPin"    : "",
-                        "RemarkPYInitial"    : "",
-                        "PYInitial"          : "WJCSZS",
-                        "PYQuanPin"          : "wenjianchuanshuzhushou",
-                        "Uin"                : 0,
-                        "UserName"           : "filehelper",
-                        "NickName"           : "File Transfer",
-                        "HeadImgUrl"         : "/cgi-bin/mmwebwx-bin/webwxgeticon?seq=620171266&username=filehelper&skey=@crypt_cf81dc07_edb9981fcc3c20425769e717dfaa6881",
-                        "ContactFlag"        : 3,
-                        "MemberCount"        : 0,
-                        "MemberList"         : [],
-                        "RemarkName"         : "",
-                        "HideInputBarFlag"   : 0,
-                        "Sex"                : 0,
-                        "Signature"          : "",
-                        "VerifyFlag"         : 0,
-                        "OwnerUin"           : 0,
-                        "StarFriend"         : 0,
-                        "AppAccountFlag"     : 0,
-                        "Statues"            : 0,
-                        "AttrStatus"         : 0,
-                        "Province"           : "",
-                        "City"               : "",
-                        "Alias"              : "",
-                        "SnsFlag"            : 0,
-                        "UniFriend"          : 0,
-                        "DisplayName"        : "",
-                        "ChatRoomId"         : 0,
-                        "KeyWord"            : "fil",
-                        "EncryChatRoomId"    : "",
-                        "MMOrderSymbol"      : "WENJIANCHUANSHUZHUSHOU",
-                        "_index"             : 1,
-                        "_h"                 : 64,
-                        "_offsetTop"         : 64,
-                        "MMCanCreateChatroom": false,
-                        "MMDigest"           : "",
-                        "NoticeCount"        : 0,
-                        "MMTime"             : "",
-                        "MMDigestTime"       : ""
-                    }
-                ]
-            }
             this.list  = this.getContacts()
             this.airScrollContacts.init(this.list.contacts)
             this.airScrollChatrooms.init(this.list.chatrooms)
@@ -87,6 +46,20 @@ class Ctrl {
                 itemKey: 'chatrooms',
                 idKey  : 'UserName'
             })
+
+            if (listData && listData.length) {
+                this.model.msg = msg
+                this.toNext(2)
+                listData.forEach((item) => {
+                    if (item.isContact()) {
+                        this.contactsChecker.check(item, true)
+                        this.contactsChecker.update()
+                    } else {
+                        this.chatroomsChecker.check(item, true)
+                        this.chatroomsChecker.update()
+                    }
+                })
+            }
         })
     }
 
@@ -121,8 +94,61 @@ class Ctrl {
     }
 
     toSend() {
+        let model = Object.assign({}, this.model)
+
+        model.msg  = 'test'
+        model.list = [].concat(this.contactsChecker.checkedItems).concat(this.chatroomsChecker.checkedItems)
+        /*
+         model.list = [
+         {
+         "RemarkPYQuanPin"    : "",
+         "RemarkPYInitial"    : "",
+         "PYInitial"          : "WJCSZS",
+         "PYQuanPin"          : "wenjianchuanshuzhushou",
+         "Uin"                : 0,
+         "UserName"           : "filehelper",
+         "NickName"           : "File Transfer",
+         "HeadImgUrl"         : "/cgi-bin/mmwebwx-bin/webwxgeticon?seq=620171266&username=filehelper&skey=@crypt_cf81dc07_edb9981fcc3c20425769e717dfaa6881",
+         "ContactFlag"        : 3,
+         "MemberCount"        : 0,
+         "MemberList"         : [],
+         "RemarkName"         : "",
+         "HideInputBarFlag"   : 0,
+         "Sex"                : 0,
+         "Signature"          : "",
+         "VerifyFlag"         : 0,
+         "OwnerUin"           : 0,
+         "StarFriend"         : 0,
+         "AppAccountFlag"     : 0,
+         "Statues"            : 0,
+         "AttrStatus"         : 0,
+         "Province"           : "",
+         "City"               : "",
+         "Alias"              : "",
+         "SnsFlag"            : 0,
+         "UniFriend"          : 0,
+         "DisplayName"        : "",
+         "ChatRoomId"         : 0,
+         "KeyWord"            : "fil",
+         "EncryChatRoomId"    : "",
+         "MMOrderSymbol"      : "WENJIANCHUANSHUZHUSHOU",
+         "_index"             : 1,
+         "_h"                 : 64,
+         "_offsetTop"         : 64,
+         "MMCanCreateChatroom": false,
+         "MMDigest"           : "",
+         "NoticeCount"        : 0,
+         "MMTime"             : "",
+         "MMDigestTime"       : "",
+         isContact            : function () {
+         return true
+         }
+         }
+         ]
+         */
+
         this.show = false
-        this.services.$rootScope.$emit('helper:main:send', this.model)
+        this.services.$rootScope.$emit('helper:main:send', model)
     }
 }
 

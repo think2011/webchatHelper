@@ -45,30 +45,21 @@ export default new class {
 
         data.Msg.Type = data.Msg.MsgType
 
+        // TODO ZH 13/11/2016
+        let q = this.services.$q.defer()
+
+        window.q = q
+        this.services.$timeout(() => {
+            q.reject()
+        }, 0)
+
+        return q.promise
+
         return services.$http({
             url   : '/cgi-bin/mmwebwx-bin/webwxsendmsg',
             method: 'POST',
             data
         })
-
-        /* let time = Math.floor(Math.random() * (1000 - 300)) + 300
-
-         return new Promise((resolve, reject) => {
-         this.showChat(userName).then(() => {
-         let $scope        = this.getScope('[ng-controller="chatSenderController"]')
-         let documentScope = this.getScope(document)
-
-         documentScope.safeApply(() => {
-         $scope.editAreaCtn = msg
-         $scope.sendTextMessage()
-         $scope.editAreaCtn = ''
-         })
-         })
-
-         setTimeout(() => {
-         resolve()
-         }, time)
-         })*/
     }
 
     /**
