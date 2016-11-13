@@ -27,8 +27,54 @@ class Ctrl {
         })
 
         this.services.$rootScope.$on('helper:send:show', () => {
-            this.show = true
-            this.list = this.getContacts()
+            this.show  = true
+            this.model = {
+                msg : 'test',
+                list: [
+                    {
+                        "RemarkPYQuanPin"    : "",
+                        "RemarkPYInitial"    : "",
+                        "PYInitial"          : "WJCSZS",
+                        "PYQuanPin"          : "wenjianchuanshuzhushou",
+                        "Uin"                : 0,
+                        "UserName"           : "filehelper",
+                        "NickName"           : "File Transfer",
+                        "HeadImgUrl"         : "/cgi-bin/mmwebwx-bin/webwxgeticon?seq=620171266&username=filehelper&skey=@crypt_cf81dc07_edb9981fcc3c20425769e717dfaa6881",
+                        "ContactFlag"        : 3,
+                        "MemberCount"        : 0,
+                        "MemberList"         : [],
+                        "RemarkName"         : "",
+                        "HideInputBarFlag"   : 0,
+                        "Sex"                : 0,
+                        "Signature"          : "",
+                        "VerifyFlag"         : 0,
+                        "OwnerUin"           : 0,
+                        "StarFriend"         : 0,
+                        "AppAccountFlag"     : 0,
+                        "Statues"            : 0,
+                        "AttrStatus"         : 0,
+                        "Province"           : "",
+                        "City"               : "",
+                        "Alias"              : "",
+                        "SnsFlag"            : 0,
+                        "UniFriend"          : 0,
+                        "DisplayName"        : "",
+                        "ChatRoomId"         : 0,
+                        "KeyWord"            : "fil",
+                        "EncryChatRoomId"    : "",
+                        "MMOrderSymbol"      : "WENJIANCHUANSHUZHUSHOU",
+                        "_index"             : 1,
+                        "_h"                 : 64,
+                        "_offsetTop"         : 64,
+                        "MMCanCreateChatroom": false,
+                        "MMDigest"           : "",
+                        "NoticeCount"        : 0,
+                        "MMTime"             : "",
+                        "MMDigestTime"       : ""
+                    }
+                ]
+            }
+            this.list  = this.getContacts()
             this.airScrollContacts.init(this.list.contacts)
             this.airScrollChatrooms.init(this.list.chatrooms)
             this.contactsChecker  = new Checker({
@@ -72,6 +118,11 @@ class Ctrl {
 
     toNext(index) {
         this.step = index
+    }
+
+    toSend() {
+        this.show = false
+        this.services.$rootScope.$emit('helper:main:send', this.model)
     }
 }
 

@@ -33,7 +33,7 @@ $color-warning: #FF6600;
   .p-l-#{$i} {
     padding-left: #{$i}px;
   }
-}s
+}
 
 .text-muted {
   color: #999;
@@ -65,6 +65,7 @@ $color-warning: #FF6600;
   font-size: 13px;
   margin-bottom: 10px;
   background: #CCCCCC;
+  transition: .3s ease;
 
   &-bar {
     height: 100%;
@@ -128,8 +129,4 @@ $color-warning: #FF6600;
       color: darken(#777, 10%);
     }
   }
-}
-
-.content {
-  padding: 10px 30px;
 }

@@ -18,30 +18,34 @@
                 </li>
                 <li class="item">
                     <h2 class="has-hr">
-                        <div class="pull-right">10/300</div>
-
-                        正在发送..
+                        <div class="pull-right">{{ctrl.sendData.sendLen}}/{{ctrl.sendData.allLen}}</div>
+                        <img
+                                style="vertical-align: text-top;width: 15px;"
+                                src="//res.wx.qq.com/zh_CN/htmledition/v2/images/icon/ico_loading31b57c.gif"
+                                alt=""> 正在发送..
                     </h2>
                     <div class="user has-hr">
                         <img class="img"
-                             src="/cgi-bin/mmwebwx-bin/webwxgeticon?seq=620171266&amp;username=filehelper&amp;skey=@crypt_cf81dc07_dcd777afa188e5245b4a88a64825d731"
-                             mm-src="/cgi-bin/mmwebwx-bin/webwxgeticon?seq=620171266&amp;username=filehelper&amp;skey=@crypt_cf81dc07_dcd777afa188e5245b4a88a64825d731"
+                             ng-src="{{ctrl.sendData.curAccount.HeadImgUrl}}"
                              alt="">
-                        File Transfer
+                        {{ctrl.sendData.curAccount.RemarkName || ctrl.sendData.curAccount.NickName}}
                     </div>
-                    <div class="progress">
+                    <div style="width: {{ctrl.sendData.progress + '%'}};" class="progress">
                         <div class="progress-bar"></div>
                     </div>
-                    <div class="value">70%</div>
+                    <div class="value">{{ctrl.sendData.progress}}%</div>
                 </li>
                 <li class="item">
                     <p class="has-hr">
-                        <span class="text-primary">300条</span>发送成功，<span class="text-warning">40条</span>失败
+                        <span class="text-primary">{{ctrl.sendData.sendLen}}条</span>发送成功，
+                        <span class="text-warning">{{ctrl.sendData.allLen - ctrl.sendData.sendLen}}条</span>失败
                     </p>
 
                     <div class="actions">
-                        <button ng-click="ctrl.toScene(1)" class="h-btn h-btn-link">知道了</button>
-                        <button class="h-btn h-btn-warning">重发失败</button>
+                        <button ng-class="{true:'h-btn-link',false: 'h-btn-primary'}[!!ctrl.sendData.failList.length]"
+                                ng-click="ctrl.toScene(1);ctrl.active=false;" class="h-btn">知道了
+                        </button>
+                        <button ng-if="ctrl.sendData.failList.length" class="h-btn h-btn-warning">重发失败</button>
                     </div>
                 </li>
             </ul>
