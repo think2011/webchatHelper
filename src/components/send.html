@@ -176,9 +176,42 @@
 
             <!-- step3 -->
             <li>
-                <form>
-
-                </form>
+                <ul class="step3-container">
+                    <li>
+                        <label>发送内容:</label>
+                        <div class="content">
+                            {{ctrl.msg}}
+                        </div>
+                    </li>
+                    <li>
+                        <label>发送条数:</label>
+                        <div class="content">
+                            {{ctrl.chatroomsChecker.checkedItems.length +
+                            ctrl.contactsChecker.checkedItems.length}}条
+                        </div>
+                    </li>
+                    <li>
+                        <label>发送间隔:</label>
+                        <div class="content">
+                            <label>
+                                <input type="radio" ng-model="ctrl.sendIntervalType" value="off">
+                                无间隔发送 <span class="text-muted">(虽然很快，但可能失败率高)</span>
+                            </label>
+                            <label>
+                                <input type="radio" ng-model="ctrl.sendIntervalType" value="on"> 间隔
+                                <input ng-model="ctrl.sendInterval"
+                                       ng-click="ctrl.sendIntervalType = 'on'"
+                                       type="number"> 毫秒
+                            </label>
+                        </div>
+                    </li>
+                    <li>
+                        <label>预计耗时:</label>
+                        <div class="content text-primary">
+                            {{ctrl.forecastTime()}}
+                        </div>
+                    </li>
+                </ul>
 
                 <div class="footer text-right">
                     <button ng-click="ctrl.toNext(2)" class="h-btn h-btn-link">上一步</button>

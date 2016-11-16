@@ -30,33 +30,30 @@ class Ctrl {
 
         ;
         (function loop() {
-            this.services.$timeout(() => {
-                sendData.curAccount = list.pop()
+            sendData.curAccount = list.pop()
 
-                let options = {
-                    MsgType   : 1,
-                    Content   : msg,
-                    ToUserName: sendData.curAccount.UserName
-                }
+            let options = {
+                MsgType   : 1,
+                Content   : msg,
+                ToUserName: sendData.curAccount.UserName
+            }
 
-                tools.sendMsg(options)
-                    .then(({data}) => {
-                        if (!data.MsgID) return Promise.reject()
-                    })
-                    .catch((err) => {
-                        sendData.failList.push(sendData.curAccount)
-                    })
-                    .finally(() => {
-                        sendData.sendLen++
-                        sendData.progress = (sendData.sendLen / sendData.allLen * 100).toFixed(2)
-                        if (list.length) {
-                            loop.call(this)
-                        } else {
-                            this.toScene(3)
-                        }
-                    })
-
-            }, interval)
+            tools.sendMsg(options)
+                .then(({data}) => {
+                    if (!data.MsgID) return Promise.reject()
+                })
+                .catch((err) => {
+                    sendData.failList.push(sendData.curAccount)
+                })
+                .finally(() => {
+                    sendData.sendLen++
+                    sendData.progress = (sendData.sendLen / sendData.allLen * 100).toFixed(2)
+                    if (list.length) {
+                        this.services.$timeout(loop.bind(this), interval)
+                    } else {
+                        this.toScene(3)
+                    }
+                })
         }.bind(this))()
     }
 

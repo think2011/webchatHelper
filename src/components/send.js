@@ -4,10 +4,12 @@ import Checker from '../lib/Checker'
 
 class Ctrl {
     constructor(services) {
-        this.services   = services
-        this.show       = false
-        this.step       = 2
-        this.contactTab = 1
+        this.services         = services
+        this.show             = false
+        this.step             = 1
+        this.contactTab       = 1
+        this.sendInterval     = 300
+        this.sendIntervalType = 'off'
 
         this._init()
     }
@@ -53,14 +55,39 @@ class Ctrl {
                 listData.forEach((item) => {
                     if (item.isContact()) {
                         this.contactsChecker.check(item, true)
-                        this.contactsChecker.update()
                     } else {
                         this.chatroomsChecker.check(item, true)
-                        this.chatroomsChecker.update()
                     }
                 })
+
+                this.contactsChecker.update()
+                this.chatroomsChecker.update()
             }
         })
+    }
+
+    forecastTime() {
+        if (!this.chatroomsChecker) return
+
+        let interval = this.sendIntervalType === 'off' ? 100 : this.sendInterval
+        let time     = (this.chatroomsChecker.checkedItems.length + this.contactsChecker.checkedItems.length) * interval
+        var result   = null
+
+        switch (true) {
+            case time > 1000 * 60:
+                result = `${(time / 60000).toFixed(2)}分钟`
+                break;
+
+            case time < 1000 * 60:
+                result = `${(time / 1000).toFixed(2)}秒`
+                break;
+
+            default:
+                result = '无法计算'
+            //
+        }
+
+        return result
     }
 
     filterList(key, airList, sourceList) {
@@ -96,8 +123,9 @@ class Ctrl {
     toSend() {
         let model = Object.assign({}, this.model)
 
-        model.msg  = 'test'
-        model.list = [].concat(this.contactsChecker.checkedItems).concat(this.chatroomsChecker.checkedItems)
+        model.interval = this.sendIntervalType === 'off' ? 0 : this.sendInterval
+        model.msg      = 'test'
+        model.list     = [].concat(this.contactsChecker.checkedItems).concat(this.chatroomsChecker.checkedItems)
         /*
          model.list = [
          {

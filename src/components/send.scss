@@ -156,4 +156,45 @@
     padding: 10px 25px;
     margin-top: 30px;
   }
+
+  .step3-container {
+    width: 80%;
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0 auto;
+    font-size: 15px;
+    min-height: 305px;
+    overflow: auto;
+    max-height: 305px;
+    align-content: flex-start;
+
+    > li {
+      width: 100%;
+      display: flex;
+      margin-bottom: 15px;
+
+      > label {
+        color: #555;
+        margin: 0 10px 0 0;
+        flex: none;
+      }
+
+      > .content {
+        margin: 0;
+        padding: 0;
+
+        > label {
+          margin-bottom: 5px;
+          display: block;
+        }
+
+        input[type=number] {
+          padding: 3px 5px;
+          width: 55px;
+          border-radius: 3px;
+          border: 1px solid #ddd;
+        }
+      }
+    }
+  }
 }
