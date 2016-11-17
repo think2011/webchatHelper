@@ -157,6 +157,41 @@
     margin-top: 30px;
   }
 
+  .editor-container {
+    position: relative;
+    transition: .3s ease;
+    height: 165px;
+
+    .action,
+    .web_wechat_screencut,
+    .web_wechat_pic,
+    .exp_hd > li:nth-child(3) {
+      display: none;
+    }
+
+    [ng-controller="chatSenderController"] {
+      top: 0;
+    }
+
+    #mmpop_emoji_panel {
+      margin-left: -16px;
+      margin-top: -10px;
+    }
+
+    .toolbar {
+      position: absolute;
+      top: 15px;
+      left: 35px;
+    }
+
+    pre {
+      background: #F0F0F0;
+      height: 120px;
+      padding: 40px 10px 15px 10px;
+      overflow: auto;
+    }
+  }
+
   .step3-container {
     width: 80%;
     display: flex;

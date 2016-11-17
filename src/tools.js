@@ -43,17 +43,17 @@ export default new class {
             Scene: 0
         }, services.accountFactory.getBaseRequest())
 
-        data.Msg.Type = data.Msg.MsgType
+        data.Msg.Content = data.Msg.MMSendContent
+        data.Msg.Type    = data.Msg.MsgType
 
-        // TODO ZH 13/11/2016
-        let q = this.services.$q.defer()
+        /*   let q = this.services.$q.defer()
 
-        window.q = q
-        this.services.$timeout(() => {
-            q.reject()
-        }, 0)
+         window.q = q
+         this.services.$timeout(() => {
+         q.reject()
+         }, 0)
 
-        return q.promise
+         return q.promise*/
 
         return services.$http({
             url   : '/cgi-bin/mmwebwx-bin/webwxsendmsg',

@@ -10,6 +10,8 @@ class Ctrl {
         this.contactTab       = 1
         this.sendInterval     = 300
         this.sendIntervalType = 'off'
+        this.isWxFaceShowed   = false
+        this.intervalTimer    = null
 
         this._init()
     }
@@ -32,10 +34,20 @@ class Ctrl {
     }
 
     _initEvent() {
+        this.services.$rootScope.$watch(() => this.show, (newVal) => {
+            if (newVal !== false) return
+            this._restoreEditor()
+        })
+
         this.services.$rootScope.$on('helper:send:show', (event, listData, msg) => {
             this.model = {}
             this.show  = true
-            this.list  = this.getContacts()
+
+            // 处理输入框
+            this._initEditor(msg)
+
+            // 处理联系人名单
+            this.list = this.getContacts()
             this.airScrollContacts.init(this.list.contacts)
             this.airScrollChatrooms.init(this.list.chatrooms)
             this.contactsChecker  = new Checker({
@@ -50,7 +62,6 @@ class Ctrl {
             })
 
             if (listData && listData.length) {
-                this.model.msg = msg
                 this.toNext(2)
                 listData.forEach((item) => {
                     if (item.isContact()) {
@@ -63,6 +74,39 @@ class Ctrl {
                 this.contactsChecker.update()
                 this.chatroomsChecker.update()
             }
+        })
+    }
+
+    _initEditor(msg) {
+        this.services.$state.go('contact')
+        this.services.$state.go('chat', {userName: 'filehelper'})
+
+        this.services.$interval.cancel(this.intervalTimer)
+        this.intervalTimer = this.services.$interval(() => {
+            this.isWxFaceShowed = !!angular.element('.editor-container #mmpop_emoji_panel').length
+        }, 300)
+        this.services.$timeout(() => {
+            let $editor     = angular.element('[ng-controller="chatSenderController"]')
+            let editorScope = this.editorScope = angular.element('#editArea').scope()
+
+            angular.element('.editor-container').append($editor)
+            this.editorScope.editAreaCtn = msg
+            editorScope.sendTextMessage  = () => true
+            angular.element('#editArea').focus()
+        })
+    }
+
+    updateMsg() {
+        this.model.msg = this.editorScope.editAreaCtn
+    }
+
+    _restoreEditor() {
+        angular.element('#editArea').scope().editAreaCtn = ''
+        angular.element('.editor-container').empty()
+
+        this.services.$timeout(() => {
+            this.services.$state.go('contact')
+            this.services.$state.go('chat', {userName: 'filehelper'})
         })
     }
 
@@ -124,10 +168,10 @@ class Ctrl {
         let model = Object.assign({}, this.model)
 
         model.interval = this.sendIntervalType === 'off' ? 0 : this.sendInterval
-        model.msg      = 'test'
         model.list     = [].concat(this.contactsChecker.checkedItems).concat(this.chatroomsChecker.checkedItems)
-        /*
-         model.list = [
+
+        // TODO ZH 18/11/2016
+        /*   model.list = [
          {
          "RemarkPYQuanPin"    : "",
          "RemarkPYInitial"    : "",
@@ -172,11 +216,11 @@ class Ctrl {
          return true
          }
          }
-         ]
-         */
+         ]*/
 
         this.show = false
         this.services.$rootScope.$emit('helper:main:send', model)
+        this.toNext(1)
     }
 }
 
