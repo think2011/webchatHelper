@@ -3,9 +3,10 @@ import tools from '../tools'
 
 class Ctrl {
     constructor(services) {
-        this.services = services
-        this.active   = false
-        this.scene    = 1
+        this.services  = services
+        this.active    = false
+        this.scene     = 1
+        this.sendTimer = null
 
         this._initEvent()
     }
@@ -30,7 +31,7 @@ class Ctrl {
 
         ;
         (function loop() {
-            sendData.curAccount = list.pop()
+            sendData.curAccount = list[0]
 
             let options = {
                 MsgType   : 1,
@@ -46,15 +47,23 @@ class Ctrl {
                     sendData.failList.push(sendData.curAccount)
                 })
                 .finally(() => {
+                    list.shift()
                     sendData.sendLen++
                     sendData.progress = (sendData.sendLen / sendData.allLen * 100).toFixed(2)
                     if (list.length) {
-                        this.services.$timeout(loop.bind(this), interval)
+                        this.sendTimer = this.services.$timeout(loop.bind(this), interval)
                     } else {
                         this.toScene(3)
                     }
                 })
         }.bind(this))()
+    }
+
+    cancelSend() {
+        this.services.$timeout.cancel(this.sendTimer)
+        this.sendData.failList = this.sendData.failList.concat(this.sendData.list)
+        this.sendData.list     = []
+        this.toScene(3)
     }
 
     toScene(index) {

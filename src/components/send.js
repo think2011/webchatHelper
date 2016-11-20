@@ -43,6 +43,8 @@ class Ctrl {
             this.model = {}
             this.show  = true
 
+            this.toNext(1)
+
             // 处理输入框
             this._initEditor(msg)
 

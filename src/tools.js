@@ -46,6 +46,7 @@ export default new class {
         data.Msg.Content = data.Msg.MMSendContent
         data.Msg.Type    = data.Msg.MsgType
 
+        // TODO ZH 20/11/2016
         let q = this.services.$q.defer()
 
         window.q = q
