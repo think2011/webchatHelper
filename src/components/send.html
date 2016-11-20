@@ -106,31 +106,35 @@
 
                             <!-- 分组 -->
                             <section>
-                                TODO
-                                <!--    <div class="tool-bar">
-                                        <label>
-                                            <i class="web_wechat_choose_wireframe"></i>
-                                            144条
-                                        </label>
-                                        <input type="text" placeholder="输入任意内容搜索">
-                                        <i class="addchat_searchicon"></i>
-                                    </div>
+                                <ul class="groups item">
+                                    <li ng-click="ctrl.selectGroup(ctrl.groups.groups[key])"
+                                        ng-repeat="(key,value) in ctrl.groups.groups">
+                                        <span>
+                                            {{key}}
+                                            <span style="font-size: 80%"
+                                                  class="text-muted">
+                                            ({{value.length}}条)
+                                            </span>
+                                        </span>
 
-
-                                    <ul class="item">
-                                        <li>123123
-                                        </li>
-                                        <li>21334444
-                                        </li>
-                                    </ul>-->
+                                        <button ng-click="ctrl.groups.del(key);$event.stopPropagation()"
+                                                class="h-btn h-btn-link">×
+                                        </button>
+                                    </li>
+                                </ul>
                             </section>
                         </div>
                     </div>
 
                     <!-- 已选 -->
                     <div class="transfer pull-right">
-                        <ul class="nav nav-underline">
+                        <ul class="nav nav-underline checked-list">
                             <li>
+                                <button ng-disabled="!(ctrl.contactsChecker.checkedItems.length || ctrl.chatroomsChecker.checkedItems.length)"
+                                        ng-click="ctrl.saveGroups()"
+                                        class="h-btn h-btn-xs pull-right">保存为分组
+                                </button>
+
                                 <a href="javascript:">已选列表</a>
                             </li>
                         </ul>

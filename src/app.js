@@ -3,7 +3,6 @@
 import tools from './tools'
 import mainComponent from './components/main'
 import sendComponent from './components/send'
-// import NgTransfer from './ng-transfer/ng-transfer'
 
 import './styles/common.scss'
 
@@ -43,6 +42,7 @@ tools.init().then(() => {
                 }
             }
 
+            // 注入services
             tools.initService(services)
 
             let interval = setInterval(() => {
@@ -53,8 +53,11 @@ tools.init().then(() => {
                     }
                 }, true)
 
+                // 大于30，说明联系人初始化好了
                 if (contacts.result.length > 30) {
                     clearInterval(interval)
+
+                    // 生成组件
                     angular.element('body').append(tools.initComponents(mainComponent))
                     angular.element('body').append(tools.initComponents(sendComponent))
                 }

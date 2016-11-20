@@ -8,6 +8,7 @@ class Ctrl {
         this.scene     = 1
         this.sendTimer = null
 
+        window.showSend = this.showSend.bind(this)
         this._initEvent()
     }
 

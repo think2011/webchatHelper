@@ -106,6 +106,18 @@
     overflow: hidden;
     border-radius: 5px;
 
+    .checked-list {
+      li {
+        width: 100%;
+
+        button {
+          padding: 3px 5px;
+          font-size: 14px;
+          margin: 6px 10px 0 0;
+        }
+      }
+    }
+
     .tool-bar {
       display: flex;
       padding: 5px 8px 8px;
@@ -159,6 +171,13 @@
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+        }
+      }
+
+      &.groups {
+        li {
+          justify-content: space-between;
+          padding: 5px 0 5px 15px;
         }
       }
     }

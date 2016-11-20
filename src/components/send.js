@@ -1,6 +1,8 @@
 import html from './send.html'
 import AirScroll from '../lib/air-scroll'
 import Checker from '../lib/Checker'
+import Groups from '../lib/Groups'
+import tools from '../tools'
 
 class Ctrl {
     constructor(services) {
@@ -12,6 +14,7 @@ class Ctrl {
         this.sendIntervalType = 'off'
         this.isWxFaceShowed   = false
         this.intervalTimer    = null
+        this.groups           = new Groups(tools.getAccount().NickName)
 
         this._init()
     }
@@ -44,6 +47,7 @@ class Ctrl {
             this.show  = true
 
             this.toNext(1)
+            if (Object.keys(this.groups.groups).length) this.changeContactTab(3)
 
             // 处理输入框
             this._initEditor(msg)
@@ -142,6 +146,34 @@ class Ctrl {
 
     changeContactTab(index) {
         this.contactTab = index
+    }
+
+    selectGroup(groups) {
+        [this.contactsChecker, this.chatroomsChecker].forEach((checker) => {
+            // 取消已选
+            checker.checkedItems.forEach((item) => {
+                checker.check(item, false)
+            })
+
+            // 载入items
+            let items = checker.context[checker.itemKey]
+            groups.forEach((groupItem) => {
+                let matchItem = items.find((checkerItem) => {
+                    if (groupItem.RemarkName) {
+                        return groupItem.RemarkName === checkerItem.RemarkName
+                    } else {
+                        return groupItem.NickName === checkerItem.NickName
+                    }
+                })
+
+                if (matchItem) checker.check(matchItem, true)
+            })
+        })
+    }
+
+    saveGroups() {
+        this.groups.save(this.contactsChecker.checkedItems.concat(this.chatroomsChecker.checkedItems))
+        this.changeContactTab(3)
     }
 
     getContacts() {

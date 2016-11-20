@@ -13,7 +13,7 @@
         <div class="transfer from">
             <div class="transfer-head">
                 <label>
-                    {{ctrl.from.items.length}} 条
+                    {{ctrl.from.groups.length}} 条
                 </label>
 
                 <span class="type">联系人列表</span>
@@ -25,7 +25,7 @@
                 </div>
                 <ul class="transfer-list">
                     <li
-                            ng-repeat="item in ctrl.from.airScroll.items track by item.UserName">
+                            ng-repeat="item in ctrl.from.airScroll.groups track by item.UserName">
                         <label>
                             <i ng-class="{'web_wechat_choose_wireframe':item.checked === false,'web_wechat_choose_green':item.checked === true}"
                             ></i>
@@ -39,12 +39,12 @@
         </div>
 
         <div class="transfer-operation">
-            <button ng-disabled="!ctrl.hasSomeChecked(ctrl.to.items)"
-                    ng-click="ctrl.transfer(ctrl.to.items, ctrl.from.items)">
+            <button ng-disabled="!ctrl.hasSomeChecked(ctrl.to.groups)"
+                    ng-click="ctrl.transfer(ctrl.to.groups, ctrl.from.groups)">
                 &lt;
             </button>
-            <button ng-disabled="!ctrl.hasSomeChecked(ctrl.from.items)"
-                    ng-click="ctrl.transfer(ctrl.from.items, ctrl.to.items)">
+            <button ng-disabled="!ctrl.hasSomeChecked(ctrl.from.groups)"
+                    ng-click="ctrl.transfer(ctrl.from.groups, ctrl.to.groups)">
                 &gt;
             </button>
         </div>
@@ -52,16 +52,16 @@
         <div class="transfer to">
             <div class="transfer-head">
                 <label>
-                    {{ctrl.to.items.length}} 条
+                    {{ctrl.to.groups.length}} 条
                 </label>
 
                 <span class="type">
-                    <span ng-show="ctrl.to.items.length">
+                    <span ng-show="ctrl.to.groups.length">
                     <a class="_btn-small"
                        ng-click="ctrl.saveGroups()"
                        href="javascript:">存为分组</a></span>
 
-                <span ng-show="!ctrl.to.items.length">已选列表</span>
+                <span ng-show="!ctrl.to.groups.length">已选列表</span>
                 </span>
             </div>
 
@@ -70,7 +70,7 @@
                     <input ng-model="ctrl.to.search" type="search" placeholder="搜:姓名、昵称、组名、首字母、全拼">
                 </div>
                 <ul class="transfer-list">
-                    <li ng-repeat="item in ctrl.to.airScroll.items  track by item.UserName">
+                    <li ng-repeat="item in ctrl.to.airScroll.groups  track by item.UserName">
                         <label>
                             <i ng-class="{'web_wechat_choose_wireframe':item.checked === false,'web_wechat_choose_green':item.checked === true}"
                             ></i>
@@ -84,17 +84,17 @@
         </div>
     </div>
 
-    <div ng-show="ctrl.to.items.length" class="text-center">
-        <button ng-click="closeThisDialog(ctrl.to.items)" class="btn">去群发</button>
+    <div ng-show="ctrl.to.groups.length" class="text-center">
+        <button ng-click="closeThisDialog(ctrl.to.groups)" class="btn">去群发</button>
     </div>
 </div>
 
 <div ng-if="ctrl.tab === 1" class="dialog_bd">
     <ul class="groups">
-        <li ng-click="ctrl.selectGroup(items)" ng-repeat="(key, items) in ctrl.groups track by $index">
+        <li ng-click="ctrl.selectGroup(groups)" ng-repeat="(key, groups) in ctrl.groups track by $index">
             <a href="javascript:">
-                {{key}} ({{items.length}}条联系人)
-                <span class="del" ng-click="ctrl.delGroup(key,items)">删除</span>
+                {{key}} ({{groups.length}}条联系人)
+                <span class="del" ng-click="ctrl.delGroup(key,groups)">删除</span>
             </a>
         </li>
     </ul>

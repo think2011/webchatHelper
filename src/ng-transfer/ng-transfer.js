@@ -59,57 +59,57 @@ class Ctrl {
         }
 
         this.from = {
-            items    : this.$rootScope.weChatHelper.allContacts,
+            groups   : this.$rootScope.weChatHelper.allContacts,
             airScroll: new AirScroll(fromAirScrollConfig)
         }
         this.to   = {
-            items    : [],
+            groups   : [],
             airScroll: new AirScroll(toAirScrollConfig)
         }
 
-        this.$scope.$watch(() => this.from.items.length, (newVal) => {
-            this.from.airScroll.initItems(this.from.items)
+        this.$scope.$watch(() => this.from.groups.length, (newVal) => {
+            this.from.airScroll.initItems(this.from.groups)
         })
 
-        this.$scope.$watch(() => this.to.items.length, (newVal) => {
-            this.to.airScroll.initItems(this.to.items)
+        this.$scope.$watch(() => this.to.groups.length, (newVal) => {
+            this.to.airScroll.initItems(this.to.groups)
         })
 
         this.$scope.$watch(() => this.from.search, (newVal, oldVal) => {
             if (!oldVal) {
-                this.from.backupItems = this.from.items
+                this.from.backupItems = this.from.groups
             }
 
             for (var i = 0; i < this.from.backupItems.length; i++) {
-                if (this.to.items.includes(this.from.backupItems[i])) {
+                if (this.to.groups.includes(this.from.backupItems[i])) {
                     this.from.backupItems.splice(i, 1)
                     i--
                 }
             }
 
-            this.from.items = this.filterFunc(this.from.backupItems, newVal)
+            this.from.groups = this.filterFunc(this.from.backupItems, newVal)
         })
 
         this.$scope.$watch(() => this.to.search, (newVal, oldVal) => {
             if (!oldVal) {
-                this.to.backupItems = this.to.items
+                this.to.backupItems = this.to.groups
             }
 
             for (var i = 0; i < this.to.backupItems.length; i++) {
-                if (this.from.items.includes(this.to.backupItems[i])) {
+                if (this.from.groups.includes(this.to.backupItems[i])) {
                     this.to.backupItems.splice(i, 1)
                     i--
                 }
             }
 
-            this.to.items = this.filterFunc(this.to.backupItems, newVal)
+            this.to.groups = this.filterFunc(this.to.backupItems, newVal)
         })
     }
 
     revertItems() {
-        this.from.items.push(...this.to.items)
-        this.from.items.forEach((item) => item.checked = false)
-        this.to.items = []
+        this.from.groups.push(...this.to.groups)
+        this.from.groups.forEach((item) => item.checked = false)
+        this.to.groups = []
     }
 
     transfer(fromItems, toItems) {
@@ -123,13 +123,13 @@ class Ctrl {
     }
 
     hasSomeChecked(items) {
-        return items && items.some((item) => item.checked)
+        return groups && groups.some((item) => item.checked)
     }
 
     filterFunc(items, expected) {
-        if (!expected) return items
+        if (!expected) return groups
 
-        return items.filter((item) => {
+        return groups.filter((item) => {
             let reg = new RegExp(expected, 'ig')
             return reg.test(item.PYInitial)
                 || reg.test(item.RemarkPYInitial)
@@ -149,7 +149,7 @@ class Ctrl {
             if (!confirm(`已有【${name}】分组，要覆盖掉吗？`)) return
         }
 
-        this.groups[name] = this.to.items.map((item) => {
+        this.groups[name] = this.to.groups.map((item) => {
             return {
                 NickName  : item.NickName,
                 RemarkName: item.RemarkName
@@ -161,7 +161,7 @@ class Ctrl {
 
     selectGroup(groupItems) {
         this.revertItems()
-        this.from.items.forEach((item) => {
+        this.from.groups.forEach((item) => {
             item.checked = groupItems.some((groupItem) => {
                 if (item.RemarkName) {
                     return item.RemarkName === groupItem.RemarkName
@@ -171,7 +171,7 @@ class Ctrl {
             })
         })
 
-        this.transfer(this.from.items, this.to.items)
+        this.transfer(this.from.groups, this.to.groups)
         this.tab = 0
     }
 
