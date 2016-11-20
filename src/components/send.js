@@ -5,7 +5,7 @@ import Checker from '../lib/Checker'
 class Ctrl {
     constructor(services) {
         this.services         = services
-        this.show             = false
+        this.show             = null
         this.step             = 1
         this.contactTab       = 1
         this.sendInterval     = 300
@@ -169,56 +169,7 @@ class Ctrl {
 
         model.interval = this.sendIntervalType === 'off' ? 0 : this.sendInterval
         model.list     = [].concat(this.contactsChecker.checkedItems).concat(this.chatroomsChecker.checkedItems)
-
-        // TODO ZH 18/11/2016
-        /*   model.list = [
-         {
-         "RemarkPYQuanPin"    : "",
-         "RemarkPYInitial"    : "",
-         "PYInitial"          : "WJCSZS",
-         "PYQuanPin"          : "wenjianchuanshuzhushou",
-         "Uin"                : 0,
-         "UserName"           : "filehelper",
-         "NickName"           : "File Transfer",
-         "HeadImgUrl"         : "/cgi-bin/mmwebwx-bin/webwxgeticon?seq=620171266&username=filehelper&skey=@crypt_cf81dc07_edb9981fcc3c20425769e717dfaa6881",
-         "ContactFlag"        : 3,
-         "MemberCount"        : 0,
-         "MemberList"         : [],
-         "RemarkName"         : "",
-         "HideInputBarFlag"   : 0,
-         "Sex"                : 0,
-         "Signature"          : "",
-         "VerifyFlag"         : 0,
-         "OwnerUin"           : 0,
-         "StarFriend"         : 0,
-         "AppAccountFlag"     : 0,
-         "Statues"            : 0,
-         "AttrStatus"         : 0,
-         "Province"           : "",
-         "City"               : "",
-         "Alias"              : "",
-         "SnsFlag"            : 0,
-         "UniFriend"          : 0,
-         "DisplayName"        : "",
-         "ChatRoomId"         : 0,
-         "KeyWord"            : "fil",
-         "EncryChatRoomId"    : "",
-         "MMOrderSymbol"      : "WENJIANCHUANSHUZHUSHOU",
-         "_index"             : 1,
-         "_h"                 : 64,
-         "_offsetTop"         : 64,
-         "MMCanCreateChatroom": false,
-         "MMDigest"           : "",
-         "NoticeCount"        : 0,
-         "MMTime"             : "",
-         "MMDigestTime"       : "",
-         isContact            : function () {
-         return true
-         }
-         }
-         ]*/
-
-        this.show = false
+        this.show      = false
         this.services.$rootScope.$emit('helper:main:send', model)
         this.toNext(1)
     }

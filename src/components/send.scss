@@ -9,9 +9,22 @@
   z-index: 199111;
   background: #fff;
   transition: .3s ease;
+  display: none;
+
+  & + .backdrop {
+    display: none;
+  }
 
   .content {
     padding: 10px 30px;
+  }
+
+  &.show {
+    display: block;
+
+    & + .backdrop {
+      display: block;
+    }
   }
 
   &.hide {
