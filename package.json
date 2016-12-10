@@ -4,8 +4,8 @@
   "description": "微信群发助手",
   "main": "index.js",
   "scripts": {
-    "dev": "rm -rf ./dist && webpack -w --profile",
-    "build": "rm -rf ./dist && webpack -p --progress --devtool ''",
+    "dev": "rimraf ./dist && webpack -w --profile",
+    "build": "rimraf ./dist && webpack -p --progress --devtool ''",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,6 +27,7 @@
     "file-loader": "^0.8.5",
     "html-loader": "^0.4.3",
     "node-sass": "^3.7.0",
+    "rimraf": "^2.5.4",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1"
