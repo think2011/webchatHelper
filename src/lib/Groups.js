@@ -45,7 +45,7 @@ export class DynamicGroup {
     }
 
     save() {
-        let name = prompt('创建【备注名】中包含有以下关键字的分组\n输入【关键字】：')
+        let name = prompt('创建【备注名】中包含有以下【关键字】的分组\n输入【关键字】：')
 
         if (!name) return
 
