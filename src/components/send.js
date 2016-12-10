@@ -188,7 +188,7 @@ class Ctrl {
         this.services.$timeout.cancel(this.msgTimer)
         this.msgTimer = this.services.$timeout(() => {
             this.msgContent = null
-        }, 1500)
+        }, 2500)
     }
 
     selectDynamicGroup(groupItem, replace = false) {
