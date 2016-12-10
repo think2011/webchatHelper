@@ -1,3 +1,5 @@
+const pinyin = require("pinyin")
+
 export default class {
     constructor(user) {
         this.user   = user
@@ -40,8 +42,35 @@ export default class {
 
 export class DynamicGroup {
     constructor(user) {
-        this.user   = user
+        this.user     = user
+        this.emojiMap = {}
+
+        for (let i = 0; i <= 9; i++) {
+            this.emojiMap[`@${i}`] = {
+                src: `<img class="emoji emoji3${i}20e3" text="_web" src="/zh_CN/htmledition/v2/images/spacer.gif" />`,
+                reg: `spanclassemojiemoji3${i}20e3span\\??`
+            }
+        }
+
         this.groups = this._fetch()
+    }
+
+    _processName(name) {
+        let obj = {
+            name,
+            showName: name,
+            reg     : pinyin(name, {style: pinyin.STYLE_NORMAL}).join('')
+        }
+
+        // 转换emoji数字
+        if (/@\d/.test(name)) {
+            obj.showName = obj.showName.replace(/(@\d)/g, (matchStr) => this.emojiMap[matchStr].src)
+            obj.reg      = obj.reg.replace(/(@\d)/g, (matchStr) => this.emojiMap[matchStr].reg)
+        }
+
+        obj.reg = new RegExp(obj.reg.replace(/[\@\#\$\%\^\&\*\{\}\:\"\<\>\(\)\_\-\']/g, ''))
+
+        return obj
     }
 
     save() {
@@ -49,18 +78,20 @@ export class DynamicGroup {
 
         if (!name) return
 
-        if (this.groups.includes(name)) {
+        let processName = this._processName(name)
+
+        if (this.groups.find((item) => item.name === processName.name)) {
             if (!confirm(`已有【${name}】分组，要覆盖掉吗？`)) return
         }
 
-        this.groups.push(name)
+        this.groups.unshift(processName)
         this._write()
     }
 
-    del(name) {
-        if (!confirm(`真的要删除【${name}】分组吗？`)) return
+    del(item) {
+        if (!confirm(`真的要删除【${item.name}】分组吗？`)) return
 
-        this.groups.splice(this.groups.indexOf(name), 1)
+        this.groups.splice(this.groups.indexOf(item), 1)
         this._write()
     }
 
@@ -68,12 +99,30 @@ export class DynamicGroup {
         let items = JSON.parse(localStorage[`dynamic_groups_${this.user}`] || '[]')
 
         // 这里添加内置分组
-        // items.unshift('港-1', '内-1')
+        for (let i = 0; i <= 30; i++) {
+            let index = `${i}`.split('').map((item) => `@${item}`).join('')
 
-        return items
+            items.push(
+                `内${index}`
+            )
+        }
+
+        for (let i = 0; i <= 30; i++) {
+            let index = `${i}`.split('').map((item) => `@${item}`).join('')
+
+            items.push(
+                `港${index}`
+            )
+        }
+
+        return items.map((item) => this._processName(item))
     }
 
     _write() {
-        return localStorage[`dynamic_groups_${this.user}`] = JSON.stringify(this.groups)
+        let items = this.groups
+            .filter((item) => !(/内@|港@/g.test(item.name)))
+            .map((item) => item.name)
+
+        return localStorage[`dynamic_groups_${this.user}`] = JSON.stringify(items)
     }
 }

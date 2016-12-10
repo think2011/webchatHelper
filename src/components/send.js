@@ -179,7 +179,7 @@ class Ctrl {
         this.changeContactTab(3)
     }
 
-    selectDynamicGroup(name) {
+    selectDynamicGroup(groupItem) {
         [this.contactsChecker].forEach((checker) => {
             // 取消已选
             checker.checkedItems.forEach((item) => {
@@ -187,16 +187,15 @@ class Ctrl {
             })
 
             // 载入items
-            this.getItemsByRemarkName(name).forEach((item) => checker.check(item, true))
+            this.getItemsByRemarkName(groupItem).forEach((item) => checker.check(item, true))
         })
     }
 
-    getItemsByRemarkName(name) {
+    getItemsByRemarkName(groupItem) {
         if (!this.contactsChecker) return
-
         let items = this.contactsChecker.context[this.contactsChecker.itemKey]
 
-        return items.filter((item) => item.RemarkName.includes(name))
+        return items.filter((item) => item.RemarkName.includes(groupItem.name) || groupItem.reg.test(item.RemarkPYQuanPin))
     }
 
     getContacts() {
