@@ -60,6 +60,9 @@ tools.init().then(() => {
                     // 生成组件
                     angular.element('body').append(tools.initComponents(mainComponent))
                     angular.element('body').append(tools.initComponents(sendComponent))
+
+                    // test
+                    $rootScope.$emit('helper:send:show')
                 }
             }, 1000)
         }])

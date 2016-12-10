@@ -23,13 +23,13 @@ class Ctrl {
         this.airScrollContacts  = new AirScroll({
             selector  : '.transfer .item.contacts',
             itemHeight: 45,
-            viewHeight: 387,
+            viewHeight: 542,
             $scope    : this.services.$rootScope
         })
         this.airScrollChatrooms = new AirScroll({
             selector  : '.transfer .item.chatrooms',
             itemHeight: 45,
-            viewHeight: 387,
+            viewHeight: 542,
             $scope    : this.services.$rootScope
         })
 

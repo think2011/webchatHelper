@@ -35,6 +35,8 @@
                 <div class="content">
                     <!-- 待选 -->
                     <div class="transfer">
+                        <button class="h-btn h-btn-xs pull-right">⭐️ 自动分组
+                        </button>
                         <ul class="nav nav-underline">
                             <li ng-class="{active:ctrl.contactTab === 1}">
                                 <a ng-click="ctrl.changeContactTab(1)" href="javascript:">联系人</a>
@@ -134,7 +136,6 @@
                                         ng-click="ctrl.saveGroups()"
                                         class="h-btn h-btn-xs pull-right">保存为分组
                                 </button>
-
                                 <a href="javascript:">已选列表</a>
                             </li>
                         </ul>
