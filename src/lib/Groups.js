@@ -68,6 +68,11 @@ export class DynamicGroup {
             obj.reg      = obj.reg.replace(/(@\d)/g, (matchStr) => this.emojiMap[matchStr].reg)
         }
 
+        // 替换繁体的"内"的相应拼音
+        if (/内@/.test(name)) {
+            obj.reg = obj.reg.replace(/neispan/g, (matchStr) => 'neispan|naspan')
+        }
+
         obj.reg = new RegExp(obj.reg.replace(/[\@\#\$\%\^\&\*\{\}\:\"\<\>\(\)\_\-\']/g, ''))
 
         return obj
@@ -103,7 +108,7 @@ export class DynamicGroup {
             let index = `${i}`.split('').map((item) => `@${item}`).join('')
 
             items.push(
-                `内${index}`
+                `港${index}`
             )
         }
 
@@ -111,7 +116,7 @@ export class DynamicGroup {
             let index = `${i}`.split('').map((item) => `@${item}`).join('')
 
             items.push(
-                `港${index}`
+                `内${index}`
             )
         }
 

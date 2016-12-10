@@ -121,11 +121,11 @@
                                             </span>
                                         </span>
 
-                                        <span class="label label-success">自定</span>
-
                                         <button ng-click="ctrl.groups.del(key);$event.stopPropagation()"
                                                 class="h-btn h-btn-link">×
                                         </button>
+
+                                        <span class="label label-success">自定</span>
                                     </li>
                                     <li ng-click="ctrl.selectDynamicGroup(item)"
                                         ng-repeat="item in ctrl.dynamicGroups.groups">
@@ -137,16 +137,17 @@
                                             </span>
                                         </span>
 
-                                        <span ng-if="item.name[0] === '内' ||item.name[0] === '港'"
-                                              class="label label-default stop">内置</span>
-
-                                        <span ng-if="item.name[0] !== '内' && item.name[0] !== '港'"
-                                              class="label label-danger">动态</span>
 
                                         <button ng-hide="item.name[0] === '内' ||item.name[0] === '港'"
                                                 ng-click="ctrl.dynamicGroups.del(item);$event.stopPropagation()"
                                                 class="h-btn h-btn-link">×
                                         </button>
+
+                                        <span ng-if="item.name[0] === '内' ||item.name[0] === '港'"
+                                              class="label label-default stop">内置</span>
+
+                                        <span ng-if="item.name[0] !== '内' && item.name[0] !== '港'"
+                                              class="label label-danger">动态</span>
                                     </li>
                                 </ul>
                             </section>
