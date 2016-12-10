@@ -151,12 +151,14 @@ class Ctrl {
         this.contactTab = index
     }
 
-    selectGroup(groups) {
+    selectGroup(key, groups, replace = false) {
         [this.contactsChecker, this.chatroomsChecker].forEach((checker) => {
-            // 取消已选
-            checker.checkedItems.forEach((item) => {
-                checker.check(item, false)
-            })
+            if (replace) {
+                // 取消已选
+                checker.checkedItems.forEach((item) => {
+                    checker.check(item, false)
+                })
+            }
 
             // 载入items
             let items = checker.context[checker.itemKey]
@@ -171,6 +173,7 @@ class Ctrl {
 
                 if (matchItem) checker.check(matchItem, true)
             })
+            this.showMsgContent(`${replace ? '替换' : '叠加'}【${key}】分组到已选列表`)
         })
     }
 
@@ -179,15 +182,27 @@ class Ctrl {
         this.changeContactTab(3)
     }
 
-    selectDynamicGroup(groupItem) {
+    showMsgContent(msg) {
+        this.msgContent = msg
+
+        this.services.$timeout.cancel(this.msgTimer)
+        this.msgTimer = this.services.$timeout(() => {
+            this.msgContent = null
+        }, 1500)
+    }
+
+    selectDynamicGroup(groupItem, replace = false) {
         [this.contactsChecker].forEach((checker) => {
-            // 取消已选
-            checker.checkedItems.forEach((item) => {
-                checker.check(item, false)
-            })
+            if (replace) {
+                // 取消已选
+                checker.checkedItems.forEach((item) => {
+                    checker.check(item, false)
+                })
+            }
 
             // 载入items
             this.getItemsByRemarkName(groupItem).forEach((item) => checker.check(item, true))
+            this.showMsgContent(`${replace ? '替换' : '叠加'}【${groupItem.showName}】分组到已选列表`)
         })
     }
 

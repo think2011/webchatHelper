@@ -202,30 +202,54 @@
 
       &.groups {
         li {
-          justify-content: space-between;
           padding: 5px 0 5px 15px;
           position: relative;
+          cursor: default;
+
+          &:active {
+            opacity: 1 !important;
+          }
+
+          &:hover {
+            .add {
+              opacity: 1;
+            }
+          }
 
           .label {
             transition: .3s;
             position: absolute;
             right: 10px;
+            z-index: 2;
 
             &.stop {
               transform: translate(0, 0) !important;
             }
           }
 
-          .h-btn-link {
+          .add {
+            position: absolute;
+            right: 70px;
+            padding: 0 5px;
             opacity: 0;
-            position: relative;
-            z-index: 2;
+            transition: 0s;
+
+            &:nth-child(2) {
+              right: 120px;
+            }
+          }
+
+          .del {
+            opacity: 0;
+            position: absolute;
+            right: 0;
+            z-index: 3;
 
             &:hover {
               opacity: 1;
 
               & + .label {
-                transform: translate(-30px, 0);
+                transform: translate(-25px, 0);
               }
             }
           }
@@ -314,5 +338,45 @@
         }
       }
     }
+  }
+}
+
+.el-message {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+  min-width: 300px;
+  padding: 10px 12px;
+  box-sizing: border-box;
+  border-radius: 2px;
+  position: fixed;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -120%);
+  opacity: 0;
+  background-color: #fff;
+  transition: opacity .3s, transform .4s;
+  overflow: hidden;
+  z-index: 199111;
+
+  &.active {
+    top: 0;
+    transform: translate(-50%, 20px);
+    opacity: 1;
+  }
+
+  .el-message__icon {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .el-message__group {
+    margin-left: 38px;
+    position: relative;
+  }
+
+  p {
+    line-height: 1;
   }
 }
