@@ -37,3 +37,43 @@ export default class {
         return localStorage[`groups_${this.user}`] = JSON.stringify(this.groups)
     }
 }
+
+export class DynamicGroup {
+    constructor(user) {
+        this.user   = user
+        this.groups = this._fetch()
+    }
+
+    save() {
+        let name = prompt('创建【备注名】中包含有以下关键字的分组\n输入【关键字】：')
+
+        if (!name) return
+
+        if (this.groups.includes(name)) {
+            if (!confirm(`已有【${name}】分组，要覆盖掉吗？`)) return
+        }
+
+        this.groups.push(name)
+        this._write()
+    }
+
+    del(name) {
+        if (!confirm(`真的要删除【${name}】分组吗？`)) return
+
+        this.groups.splice(this.groups.indexOf(name), 1)
+        this._write()
+    }
+
+    _fetch() {
+        let items = JSON.parse(localStorage[`dynamic_groups_${this.user}`] || '[]')
+
+        // 这里添加内置分组
+        // items.unshift('港-1', '内-1')
+
+        return items
+    }
+
+    _write() {
+        return localStorage[`dynamic_groups_${this.user}`] = JSON.stringify(this.groups)
+    }
+}

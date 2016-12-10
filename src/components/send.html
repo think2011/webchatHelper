@@ -35,7 +35,9 @@
                 <div class="content">
                     <!-- 待选 -->
                     <div class="transfer">
-                        <button class="h-btn h-btn-xs pull-right">⭐️ 自动分组
+                        <button ng-click="ctrl.dynamicGroups.save()"
+                                ng-class="{active:ctrl.contactTab === 3}"
+                                class="btn-auto-groups h-btn h-btn-xs pull-right">⭐️ 动态分组
                         </button>
                         <ul class="nav nav-underline">
                             <li ng-class="{active:ctrl.contactTab === 1}">
@@ -120,6 +122,21 @@
                                         </span>
 
                                         <button ng-click="ctrl.groups.del(key);$event.stopPropagation()"
+                                                class="h-btn h-btn-link">×
+                                        </button>
+                                    </li>
+                                    <li ng-click="ctrl.selectDynamicGroup(item)"
+                                        ng-repeat="item in ctrl.dynamicGroups.groups">
+                                        <span>
+                                            {{item}}
+                                              <span style="font-size: 80%"
+                                                    class="text-muted">
+                                            ({{ctrl.getItemsByRemarkName(item).length}}条)
+                                            </span>
+                                            <span class="label label-success">动态</span>
+                                        </span>
+
+                                        <button ng-click="ctrl.dynamicGroups.del(item);$event.stopPropagation()"
                                                 class="h-btn h-btn-link">×
                                         </button>
                                     </li>

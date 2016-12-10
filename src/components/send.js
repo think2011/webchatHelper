@@ -1,7 +1,9 @@
 import html from './send.html'
 import AirScroll from '../lib/air-scroll'
 import Checker from '../lib/Checker'
-import Groups from '../lib/Groups'
+import Groups, {
+    DynamicGroup
+} from '../lib/Groups'
 import tools from '../tools'
 
 class Ctrl {
@@ -15,6 +17,7 @@ class Ctrl {
         this.isWxFaceShowed   = false
         this.intervalTimer    = null
         this.groups           = new Groups(tools.getAccount().NickName)
+        this.dynamicGroups    = new DynamicGroup(tools.getAccount().NickName)
 
         this._init()
     }
@@ -121,7 +124,7 @@ class Ctrl {
 
         let interval = this.sendIntervalType === 'off' ? 100 : this.sendInterval
         let time     = (this.chatroomsChecker.checkedItems.length + this.contactsChecker.checkedItems.length) * interval
-        var result   = null
+        let result   = null
 
         switch (true) {
             case time > 1000 * 60:
@@ -174,6 +177,26 @@ class Ctrl {
     saveGroups() {
         this.groups.save(this.contactsChecker.checkedItems.concat(this.chatroomsChecker.checkedItems))
         this.changeContactTab(3)
+    }
+
+    selectDynamicGroup(name) {
+        [this.contactsChecker].forEach((checker) => {
+            // 取消已选
+            checker.checkedItems.forEach((item) => {
+                checker.check(item, false)
+            })
+
+            // 载入items
+            this.getItemsByRemarkName(name).forEach((item) => checker.check(item, true))
+        })
+    }
+
+    getItemsByRemarkName(name) {
+        if (!this.contactsChecker) return
+
+        let items = this.contactsChecker.context[this.contactsChecker.itemKey]
+
+        return items.filter((item) => item.RemarkName.includes(name))
     }
 
     getContacts() {

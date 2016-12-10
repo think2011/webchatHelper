@@ -62,7 +62,7 @@ tools.init().then(() => {
                     angular.element('body').append(tools.initComponents(sendComponent))
 
                     // test
-                    $rootScope.$emit('helper:send:show')
+                    // $rootScope.$emit('helper:send:show')
                 }
             }, 1000)
         }])

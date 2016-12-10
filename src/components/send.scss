@@ -47,13 +47,43 @@
   }
 
   &.step-1 {
-    width: 520px;
-    height: 362px;
+    width: 620px;
+    height: 450px;
+
+    .footer {
+      margin-top: 118px;
+    }
   }
 
   &.step-2 {
     width: 950px;
     height: 823px;
+
+    .btn-auto-groups {
+      height: 27px;
+      line-height: 1;
+      font-size: 15px;
+      position: absolute;
+      right: 10px;
+      top: 6px;
+      padding: 0 5px;
+      opacity: 0;
+
+      &.active {
+        opacity: 1;
+      }
+    }
+
+    .label {
+      background: rgba(206, 18, 18, 0.1);
+      color: #ce1313;
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 3px;
+      margin-left: 5px;
+      position: relative;
+      border: 1px solid rgba(206, 18, 18, 0.2);
+    }
 
     .footer {
       margin-top: 0;
@@ -109,6 +139,7 @@
     display: inline-block;
     overflow: hidden;
     border-radius: 5px;
+    position: relative;
 
     .checked-list {
       li {
@@ -223,7 +254,7 @@
     pre {
       background: #F0F0F0;
       height: 120px;
-      padding: 40px 10px 15px 10px;
+      padding: 40px 10px 100px 10px;
       overflow: auto;
     }
   }
