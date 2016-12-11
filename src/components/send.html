@@ -134,7 +134,8 @@
 
                                         <span class="label label-success">自定</span>
                                     </li>
-                                    <li ng-repeat="item in ctrl.dynamicGroups.groups">
+                                    <li ng-repeat="item in ctrl.dynamicGroups.groups"
+                                        ng-if="ctrl.getItemsByRemarkName(item).length !== 0">
                                         <span>
                                              <span ng-bind-html="trustAsHtml(item.showName)"></span>
                                               <span style="font-size: 80%"
