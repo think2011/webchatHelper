@@ -12,8 +12,8 @@ class Ctrl {
         this.show             = null
         this.step             = 1
         this.contactTab       = 1
-        this.sendInterval     = 300
-        this.sendIntervalType = 'off'
+        this.sendInterval     = 1500
+        this.sendIntervalType = 'on'
         this.isWxFaceShowed   = false
         this.intervalTimer    = null
         this.groups           = new Groups(tools.getAccount().NickName)

@@ -324,8 +324,12 @@
       > .content {
         margin: 0;
         padding: 0;
+        max-height: 135px;
+        overflow: auto;
+        width: 100%;
 
         > label {
+          margin-left: 5px;
           margin-bottom: 5px;
           display: block;
         }
