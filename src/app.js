@@ -4,6 +4,8 @@ import tools from './tools'
 import mainComponent from './components/main'
 import sendComponent from './components/send'
 
+// require('vconsole/dist/vconsole.min.js')
+
 import './styles/common.scss'
 
 tools.init().then(() => {

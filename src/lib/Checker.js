@@ -86,4 +86,10 @@ export default class {
 
         this.updateChecked()
     }
+
+    destroy() {
+        this.checkedItemsTemp = {}
+        this.checkedItems     = []
+    }
+
 }

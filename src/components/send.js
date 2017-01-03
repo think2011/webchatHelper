@@ -42,7 +42,7 @@ class Ctrl {
     _initEvent() {
         this.services.$rootScope.$watch(() => this.show, (newVal) => {
             if (newVal !== false) return
-            this._restoreEditor()
+            this._restore()
         })
 
         this.services.$rootScope.$on('helper:send:show', (event, listData, msg) => {
@@ -109,7 +109,7 @@ class Ctrl {
         this.model.msg = this.editorScope.editAreaCtn
     }
 
-    _restoreEditor() {
+    _restore() {
         angular.element('#editArea').scope().editAreaCtn = ''
         angular.element('.editor-container').empty()
 
@@ -117,6 +117,17 @@ class Ctrl {
             this.services.$state.go('contact')
             this.services.$state.go('chat', {userName: 'filehelper'})
         })
+        this.contactKey   = ''
+        this.chatroomsKey = ''
+        this.checkedKey   = ''
+        this.list         = {
+            contacts : [],
+            chatrooms: [],
+        }
+        this.airScrollContacts.init(this.list.contacts)
+        this.airScrollChatrooms.init(this.list.chatrooms)
+        this.contactsChecker.destroy()
+        this.chatroomsChecker.destroy()
     }
 
     forecastTime() {

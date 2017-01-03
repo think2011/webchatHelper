@@ -33,6 +33,7 @@
     "webpack": "^1.13.1"
   },
   "dependencies": {
-    "pinyin": "^2.8.0"
+    "pinyin": "^2.8.0",
+    "vconsole": "^2.5.2"
   }
 }

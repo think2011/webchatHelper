@@ -15,16 +15,23 @@ export default class {
     }
 
     init(items) {
+        this.destroy()
+
         this.sourceItems = items
         this.items       = items.slice(0, this.viewLen)
-        this.destroy()
+        this.timer       = null
 
         this.$topPh    = angular.element('<li class="top-ph" style="margin: 0;padding: 0;"></li>')
         this.$bottomPh = angular.element('<li class="bottom-ph" style="margin: 0;padding: 0;"></li>')
         this.$elem
             .prepend(this.$topPh)
             .append(this.$bottomPh)
-            .on('scroll', this.update.bind(this))
+            .on('scroll', () => {
+                clearTimeout(this.timer)
+                this.timer = setTimeout(() => {
+                    this.update()
+                }, 100)
+            })
         this.update()
     }
 
@@ -43,7 +50,7 @@ export default class {
     destroy() {
         this.$elem.find('.top-ph').remove()
         this.$elem.find('.bottom-ph').remove()
-        this.$elem.off('scroll', this.update.bind(this))
+        this.$elem.off('scroll')
     }
 
     update() {
@@ -67,6 +74,7 @@ export default class {
             let contentH = this.items.length * this.itemHeight
             this.$topPh.height(topH)
             this.$bottomPh.height(this.allHeight - topH - contentH)
+
         })
     }
 
