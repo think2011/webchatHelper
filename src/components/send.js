@@ -23,19 +23,6 @@ class Ctrl {
     }
 
     _init() {
-        this.airScrollContacts  = new AirScroll({
-            selector  : '.transfer .item.contacts',
-            itemHeight: 45,
-            viewHeight: 542,
-            $scope    : this.services.$rootScope
-        })
-        this.airScrollChatrooms = new AirScroll({
-            selector  : '.transfer .item.chatrooms',
-            itemHeight: 45,
-            viewHeight: 542,
-            $scope    : this.services.$rootScope
-        })
-
         this._initEvent()
     }
 
@@ -56,15 +43,29 @@ class Ctrl {
             this._initEditor(msg)
 
             // 处理联系人名单
-            this.list = this.getContacts()
-            this.airScrollContacts.init(this.list.contacts)
-            this.airScrollChatrooms.init(this.list.chatrooms)
-            this.contactsChecker  = new Checker({
+            this.list               = this.getContacts()
+            this.airScrollContacts  = new AirScroll({
+                container      : document.querySelector('.transfer .item.contacts'),
+                itemHeight     : 45,
+                containerHeight: 542,
+                items          : this.list.contacts
+            }, (items) => {
+                this.services.$timeout(() => this.airScrollContacts.items = items)
+            })
+            this.airScrollChatrooms = new AirScroll({
+                container      : document.querySelector('.transfer .item.chatrooms'),
+                itemHeight     : 45,
+                containerHeight: 542,
+                items          : this.list.chatrooms
+            }, (items) => {
+                this.services.$timeout(() => this.airScrollChatrooms.items = items)
+            })
+            this.contactsChecker    = new Checker({
                 context: this.list,
                 itemKey: 'contacts',
                 idKey  : 'UserName'
             })
-            this.chatroomsChecker = new Checker({
+            this.chatroomsChecker   = new Checker({
                 context: this.list,
                 itemKey: 'chatrooms',
                 idKey  : 'UserName'
@@ -124,8 +125,8 @@ class Ctrl {
             contacts : [],
             chatrooms: [],
         }
-        this.airScrollContacts.init(this.list.contacts)
-        this.airScrollChatrooms.init(this.list.chatrooms)
+        this.airScrollContacts.destroy()
+        this.airScrollChatrooms.destroy()
         this.contactsChecker.destroy()
         this.chatroomsChecker.destroy()
     }

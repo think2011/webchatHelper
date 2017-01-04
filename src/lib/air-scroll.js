@@ -1,88 +1,74 @@
-export default class {
-    /**
-     * 享元模式的list
-     * @param options
-     * @param options.selector
-     * @param options.itemHeight
-     * @param options.viewHeight
-     * @param options.$scope
-     */
-    constructor(options) {
-        this.selector   = options.selector
-        this.itemHeight = options.itemHeight
-        this.viewHeight = options.viewHeight
-        this.$scope     = options.$scope
+export default class AirScroll {
+    constructor(options, updateCb) {
+        this.container       = options.container
+        this.itemHeight      = options.itemHeight
+        this.containerHeight = options.containerHeight
+        this.sourceItems     = options.items
+        this.items           = []
+        this.updateCb        = updateCb
+
+        this.init()
     }
 
-    init(items) {
-        this.destroy()
-
-        this.sourceItems = items
-        this.items       = items.slice(0, this.viewLen)
-        this.timer       = null
-
-        this.$topPh    = angular.element('<li class="top-ph" style="margin: 0;padding: 0;"></li>')
-        this.$bottomPh = angular.element('<li class="bottom-ph" style="margin: 0;padding: 0;"></li>')
-        this.$elem
-            .prepend(this.$topPh)
-            .append(this.$bottomPh)
-            .on('scroll', () => {
-                clearTimeout(this.timer)
-                this.timer = setTimeout(() => {
-                    this.update()
-                }, 100)
-            })
-        this.update()
-    }
-
-    get $elem() {
-        return angular.element(this.selector)
+    get viewHeight() {
+        return this.containerHeight || this.container.offsetHeight
     }
 
     get viewLen() {
         return Math.ceil(this.viewHeight / this.itemHeight)
     }
 
-    get allHeight() {
-        return this.sourceItems.length * this.itemHeight
+    get viewScrollTop() {
+        return this.container.scrollTop
+    }
+
+    get fromSlice() {
+        return Math.max(Math.floor(this.viewScrollTop / this.itemHeight) - this.viewLen, 0)
+    }
+
+    get toSlice() {
+        return Math.min(this.fromSlice + this.viewLen * 3, this.sourceItems.length)
+    }
+
+    init() {
+        this.elemBufferTop    = this.createBufferElem('buffer-top')
+        this.elemBufferBottom = this.createBufferElem('buffer-bottom')
+
+        let timer         = null
+        this.bufferUpdate = () => {
+            clearTimeout(timer)
+            timer = setTimeout(() => {
+                this.update()
+            }, 10)
+        }
+        this.container.prepend(this.elemBufferTop)
+        this.container.appendChild(this.elemBufferBottom)
+        this.container.addEventListener('scroll', this.bufferUpdate)
+        this.update()
     }
 
     destroy() {
-        this.$elem.find('.top-ph').remove()
-        this.$elem.find('.bottom-ph').remove()
-        this.$elem.off('scroll')
+        this.items = []
+        this.elemBufferTop.remove()
+        this.elemBufferBottom.remove()
+        this.container.removeEventListener('scroll', this.bufferUpdate)
     }
 
     update() {
-        let cusScroll = this.$elem.scrollTop()
-        let start     = Math.floor(cusScroll / this.itemHeight)
-        start         = start < 0 ? 0 : start
-
-        if (cusScroll > this.itemHeight) {
-            this.render(start)
-        } else {
-            this.render(0)
-        }
+        this.items = this.sourceItems.slice(this.fromSlice, this.toSlice)
+        this.updateCb && this.updateCb(this.items, this.fromSlice, this.toSlice)
+        this.elemBufferTop.style.height    = `${this.fromSlice * this.itemHeight}px`
+        this.elemBufferBottom.style.height = `${(this.sourceItems.length - this.toSlice) * this.itemHeight}px`
     }
 
-    render(start) {
-        this.$scope.safeApply(() => {
-            let end    = start + this.viewLen
-            this.items = this.sourceItems.slice(start, end)
+    createBufferElem(className) {
+        let elem = document.createElement('li')
 
-            let topH     = start * this.itemHeight
-            let contentH = this.items.length * this.itemHeight
-            this.$topPh.height(topH)
-            this.$bottomPh.height(this.allHeight - topH - contentH)
+        elem.style.margin  = 0
+        elem.style.padding = 0
+        elem.style.height  = 0
+        elem.classList.add(className)
 
-        })
-    }
-
-    initItems(sourceItems) {
-        this.items       = []
-        this.sourceItems = sourceItems
-        this.init()
+        return elem
     }
 }
-
-
