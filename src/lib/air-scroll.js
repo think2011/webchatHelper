@@ -34,13 +34,7 @@ export default class AirScroll {
         this.elemBufferTop    = this.createBufferElem('buffer-top')
         this.elemBufferBottom = this.createBufferElem('buffer-bottom')
 
-        let timer         = null
-        this.bufferUpdate = () => {
-            clearTimeout(timer)
-            timer = setTimeout(() => {
-                this.update()
-            }, 10)
-        }
+        this.bufferUpdate = this.update.bind(this)
         this.container.prepend(this.elemBufferTop)
         this.container.appendChild(this.elemBufferBottom)
         this.container.addEventListener('scroll', this.bufferUpdate)
