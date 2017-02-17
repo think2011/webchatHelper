@@ -5,14 +5,14 @@ webchatHelper
 
 version 1.5
 
-![](http://github.com/think2011/webchatHelper/raw/master/img/demo.gif);
+![](//github.com/think2011/webchatHelper/raw/master/img/demo.gif);
 
-![](http://github.com/think2011/webchatHelper/raw/master/img/1.png);
+![](//github.com/think2011/webchatHelper/raw/master/img/1.png);
 
-![](http://github.com/think2011/webchatHelper/raw/master/img/2.png);
+![](//github.com/think2011/webchatHelper/raw/master/img/2.png);
 
-![](http://github.com/think2011/webchatHelper/raw/master/img/3.png);
+![](//github.com/think2011/webchatHelper/raw/master/img/3.png);
 
-![](http://github.com/think2011/webchatHelper/raw/master/img/4.png);
+![](//github.com/think2011/webchatHelper/raw/master/img/4.png);
 
-![](http://github.com/think2011/webchatHelper/raw/master/img/5.png);
+![](//github.com/think2011/webchatHelper/raw/master/img/5.png);
