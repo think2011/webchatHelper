@@ -16,3 +16,7 @@ version 1.5
 ![](https://github.com/think2011/webchatHelper/raw/master/img/4.png);
 
 ![](https://github.com/think2011/webchatHelper/raw/master/img/5.png);
+
+version 3
+
+![](https://github.com/think2011/webchatHelper/raw/master/img/new-demo.gif);
