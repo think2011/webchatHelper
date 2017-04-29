@@ -48,7 +48,9 @@ export default class AirScroll {
         this.container.removeEventListener('scroll', this.bufferUpdate)
     }
 
-    update() {
+    update(sourceItems) {
+        if (Array.isArray(sourceItems)) this.sourceItems = sourceItems || this.sourceItems
+
         this.items = this.sourceItems.slice(this.fromSlice, this.toSlice)
         this.updateCb && this.updateCb(this.items, this.fromSlice, this.toSlice)
         this.elemBufferTop.style.height    = `${this.fromSlice * this.itemHeight}px`

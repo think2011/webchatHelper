@@ -156,7 +156,7 @@ class Ctrl {
     }
 
     filterList(key, airList, sourceList) {
-        this[airList].init(this.services.$filter('filter')(this.list[sourceList], key))
+        this[airList].update(this.services.$filter('filter')(this.list[sourceList], key))
     }
 
     changeContactTab(index) {
