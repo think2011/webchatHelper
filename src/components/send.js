@@ -61,14 +61,20 @@ class Ctrl {
                 this.services.$timeout(() => this.airScrollChatrooms.items = items)
             })
             this.contactsChecker    = new Checker({
-                context: this.list,
-                itemKey: 'contacts',
-                idKey  : 'UserName'
+                context      : this.list,
+                itemKey      : 'contacts',
+                idKey        : 'UserName',
+                getFilterList: () => {
+                    return this.services.$filter('filter')(this.list.contacts, this.contactKey)
+                }
             })
             this.chatroomsChecker   = new Checker({
-                context: this.list,
-                itemKey: 'chatrooms',
-                idKey  : 'UserName'
+                context      : this.list,
+                itemKey      : 'chatrooms',
+                idKey        : 'UserName',
+                getFilterList: () => {
+                    return this.services.$filter('filter')(this.list.chatrooms, this.chatroomsKey)
+                }
             })
 
             if (listData && listData.length) {

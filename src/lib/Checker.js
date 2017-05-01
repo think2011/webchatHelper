@@ -4,18 +4,21 @@ export default class {
      * @param context 是一个object，跟itemKey配合得到items
      * @param itemKey context中的items的key
      * @param idKey 用于匹配的值
+     * @param {Function} getFilterList
+     * 获取搜索名单
      */
-    constructor({context, itemKey, idKey}) {
+    constructor({context, itemKey, idKey, getFilterList}) {
         this.context          = context
         this.itemKey          = itemKey
         this.idKey            = idKey
         this.isAllChecked     = false
         this.checkedItemsTemp = {}
         this.checkedItems     = []
+        this.getFilterList    = getFilterList
     }
 
     _getMapItems() {
-        return this.context[this.itemKey] || []
+        return this.getFilterList()
     }
 
     check(item, state) {
